@@ -1,4 +1,4 @@
-# Sheduling_AI
+# Shceduling_AI
 
 ## Installation
 
