@@ -8,7 +8,14 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 root_path = Path(os.getcwd().split('application_source')[0] + 'application_source')
 # print(root_path)
 
-class Qwen_llm():
+class SingletonMeta(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super().__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class Qwen_llm(metaclass=SingletonMeta):
 
     def __init__(self):
         model_id = Path.joinpath(root_path, "models/Qwen/Qwen2.5-3B-Instruct")
@@ -42,7 +49,7 @@ class Qwen_llm():
         generated_ids = self.model.generate(
             **model_inputs,
             max_new_tokens=8000,  # <-- use greedy decoding (not beam search)
-            temperature=0.001,  # <-- has no effect if do_sample=False
+            temperature=0.01,  # <-- has no effect if do_sample=False
             top_p=1.0,
         )
         generated_ids = [

@@ -1,0 +1,61 @@
+client_id,name,industry,region,priority_score,last_meeting_date,meeting_freq,availability,product_interest,annual_revenue_m,client_type
+x1,"Weber, Williams and Wallace",Healthcare,East,0.87,2025-04-01,Low,Tue 9-11 AM,AI Assistant,52.6,Existing
+x2,Medina Group,Healthcare,East,0.55,2025-04-03,High,Fri 9-11 AM,AI Assistant,107.43,Strategic
+x3,Dixon-Wilson,Manufacturing,South,0.61,2025-02-16,Medium,Mon 11-1 PM,Cybersecurity,176.72,New
+x4,Carter-Johnson,Finance,North,0.55,2025-03-15,Low,Wed 2-4 PM,AI Assistant,139.62,New
+x5,Jones-Hall,Tech,East,0.99,2025-03-15,Low,Fri 2-4 PM,AI Assistant,443.87,Existing
+x6,Collins Group,Manufacturing,West,0.85,2025-04-27,High,Tue 2-4 PM,Cloud Platform,429.11,New
+x7,Smith and Sons,Tech,North,0.73,2025-03-17,Low,Wed 2-4 PM,Analytics Suite,338.39,Strategic
+x8,Pacheco Inc,Healthcare,West,0.77,2025-04-01,Low,Thu 4-6 PM,CRM Tool,494.87,Strategic
+x9,Jones PLC,Manufacturing,West,0.84,2025-04-25,Low,Mon 2-4 PM,Cybersecurity,141.19,New
+x10,"Mills, Swanson and Jones",Manufacturing,North,0.61,2025-02-28,Medium,Thu 11-1 PM,CRM Tool,78.42,Strategic
+x11,Mack LLC,Manufacturing,North,0.87,2025-03-09,High,Thu 2-4 PM,Analytics Suite,498.69,New
+x12,"Wolfe, Ruiz and Jones",Manufacturing,South,0.55,2025-04-26,Low,Tue 11-1 PM,Cybersecurity,302.24,Existing
+x13,Shea-Ortega,Tech,South,0.76,2025-02-21,Low,Mon 2-4 PM,CRM Tool,64.66,Existing
+x14,Martin PLC,Finance,South,0.5,2025-03-30,High,Tue 9-11 AM,CRM Tool,422.42,Strategic
+x15,Williams Group,Manufacturing,West,0.58,2025-04-12,High,Fri 9-11 AM,AI Assistant,168.84,New
+x16,"Caldwell, Krueger and Wolf",Healthcare,North,0.94,2025-03-24,Low,Mon 11-1 PM,AI Assistant,474.01,New
+x17,Barron Inc,Tech,East,0.99,2025-02-23,Low,Tue 4-6 PM,AI Assistant,90.91,Strategic
+x18,Cox-Roberson,Manufacturing,South,0.98,2025-02-22,High,Tue 2-4 PM,Cybersecurity,497.62,Strategic
+x19,Scott-Villanueva,Retail,South,0.95,2025-03-06,Low,Tue 11-1 PM,Cloud Platform,175.66,Strategic
+x20,Lewis Ltd,Manufacturing,West,0.79,2025-05-02,Low,Mon 11-1 PM,Cloud Platform,453.66,Existing
+x21,Mcdonald-Silva,Healthcare,West,0.64,2025-03-01,Low,Fri 11-1 PM,AI Assistant,292.34,New
+x22,"Rose, Cox and Wallace",Tech,South,0.6,2025-04-20,High,Thu 2-4 PM,Cybersecurity,211.44,Strategic
+x23,Chase Inc,Healthcare,East,0.53,2025-03-20,Low,Tue 11-1 PM,Analytics Suite,272.78,New
+x24,"Lee, White and Stewart",Tech,West,0.64,2025-04-01,Low,Thu 9-11 AM,Cloud Platform,329.55,Strategic
+x25,Frederick-Ramirez,Healthcare,East,0.96,2025-04-02,Low,Thu 4-6 PM,Cybersecurity,114.74,Existing
+x26,Tucker Group,Healthcare,West,0.69,2025-03-14,Medium,Thu 2-4 PM,Cybersecurity,351.33,Strategic
+x27,"Vega, Holmes and Smith",Manufacturing,South,0.58,2025-03-26,Low,Mon 9-11 AM,CRM Tool,38.01,Strategic
+x28,Edwards PLC,Tech,West,0.53,2025-02-26,Low,Tue 9-11 AM,AI Assistant,43.3,New
+x29,"Taylor, Collins and Richardson",Tech,East,0.97,2025-02-19,Low,Fri 9-11 AM,AI Assistant,50.17,Strategic
+x30,Thomas and Sons,Manufacturing,North,0.97,2025-04-06,High,Wed 11-1 PM,CRM Tool,203.94,Strategic
+x31,Cox Group,Retail,South,0.66,2025-04-23,Low,Thu 9-11 AM,Cloud Platform,273.44,Strategic
+x32,Anthony-Castillo,Retail,West,0.97,2025-04-24,Low,Wed 2-4 PM,Analytics Suite,224.71,Strategic
+x33,Williams Ltd,Retail,East,0.83,2025-02-21,Medium,Mon 11-1 PM,CRM Tool,66.56,New
+x34,Morgan-Zimmerman,Manufacturing,West,0.64,2025-02-14,Low,Wed 11-1 PM,CRM Tool,257.65,Existing
+x35,Joseph Group,Healthcare,East,0.82,2025-03-28,Low,Mon 2-4 PM,Analytics Suite,322.19,Existing
+x36,Brown LLC,Finance,South,0.78,2025-03-09,High,Mon 9-11 AM,Cloud Platform,473.07,Strategic
+x37,Taylor-Lowe,Finance,East,0.92,2025-02-17,High,Tue 4-6 PM,Analytics Suite,30.5,Existing
+x38,Hill LLC,Healthcare,North,0.61,2025-04-01,High,Mon 2-4 PM,AI Assistant,443.23,Existing
+x39,Cooper LLC,Manufacturing,West,0.96,2025-04-02,Low,Tue 4-6 PM,Cloud Platform,97.89,Existing
+x40,Kennedy-Rollins,Tech,West,0.63,2025-02-02,Low,Thu 9-11 AM,Cybersecurity,118.99,Existing
+x41,Mcgee-Hammond,Retail,North,0.91,2025-04-03,Low,Mon 11-1 PM,Cybersecurity,170.85,New
+x42,"Palmer, Copeland and Carter",Retail,North,0.82,2025-03-12,High,Fri 2-4 PM,Cloud Platform,66.52,Existing
+x43,"Russo, Keller and Gray",Finance,North,0.52,2025-02-15,Medium,Wed 2-4 PM,Cybersecurity,307.04,Strategic
+x44,Strickland-Pham,Healthcare,South,0.95,2025-04-08,Medium,Mon 4-6 PM,Cloud Platform,264.76,Strategic
+x45,Johnson-Sanford,Finance,North,0.72,2025-02-06,Medium,Fri 2-4 PM,Cloud Platform,362.68,Existing
+x46,Williams and Sons,Manufacturing,North,0.83,2025-03-22,Medium,Wed 11-1 PM,Analytics Suite,216.02,Existing
+x47,Tanner-Dixon,Finance,North,0.7,2025-05-02,Medium,Wed 11-1 PM,Cybersecurity,395.02,Strategic
+x48,Lowe LLC,Retail,South,0.72,2025-02-05,Low,Fri 4-6 PM,Analytics Suite,332.84,Existing
+x49,"Meyers, Craig and Garcia",Manufacturing,North,0.55,2025-04-02,High,Wed 11-1 PM,Analytics Suite,82.2,New
+x50,"Kennedy, Rodriguez and Rojas",Finance,South,0.81,2025-04-23,Medium,Thu 11-1 PM,Cybersecurity,252.24,New
+x51,Booker Inc,Finance,East,0.95,2025-04-19,Medium,Tue 11-1 PM,AI Assistant,237.63,Strategic
+x52,Jacobson-Cook,Finance,East,0.73,2025-03-04,High,Fri 2-4 PM,Cybersecurity,310.2,Strategic
+x53,"Bishop, Frederick and Reynolds",Manufacturing,South,0.92,2025-02-21,Medium,Tue 4-6 PM,Cybersecurity,137.0,New
+x54,Bridges Group,Retail,South,0.81,2025-03-28,Medium,Mon 2-4 PM,Analytics Suite,143.14,Existing
+x55,"Freeman, Woods and Nelson",Manufacturing,East,0.57,2025-04-03,Medium,Tue 11-1 PM,Cloud Platform,213.29,Existing
+x56,"Chambers, Simmons and Johns",Manufacturing,South,0.71,2025-04-06,Medium,Thu 9-11 AM,AI Assistant,196.39,New
+x57,Frank and Sons,Retail,North,0.88,2025-03-10,High,Fri 11-1 PM,Cybersecurity,117.52,Existing
+x58,Pierce-Garner,Tech,East,0.69,2025-02-06,High,Thu 11-1 PM,Cybersecurity,460.58,Strategic
+x59,"Cruz, Clayton and Bowen",Manufacturing,East,0.95,2025-02-16,High,Mon 9-11 AM,Cybersecurity,76.49,Existing
+x60,Curry PLC,Finance,East,0.63,2025-03-22,Low,Thu 2-4 PM,CRM Tool,383.0,Existing

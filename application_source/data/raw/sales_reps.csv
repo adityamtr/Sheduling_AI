@@ -1,0 +1,16 @@
+rep_id,name,region,seniority,performance_score,available_slots,product_expertise
+A,Anna Bauer,North,Mid,0.7,Mon 4-6 PM,AI Assistant
+B,Jacob Moss,East,Mid,0.69,Mon 9-11 AM,Analytics Suite
+C,Ernest Jackson,West,Junior,0.85,Tue 11-1 PM,"Cloud Platform, Analytics Suite"
+D,Robin Mills,South,Senior,0.7,Wed 11-1 PM,"AI Assistant, Cloud Platform, Cybersecurity"
+E,Tiffany Williams,North,Junior,0.83,Wed 4-6 PM,"Analytics Suite, Cloud Platform"
+F,Sarah Wallace,West,Junior,0.88,Wed 9-11 AM,"Cloud Platform, CRM Tool, Cybersecurity"
+G,Kevin Williams,South,Senior,0.75,Fri 2-4 PM,Cybersecurity
+H,Misty Perez,South,Junior,0.77,Wed 4-6 PM,"Analytics Suite, Cybersecurity, Cloud Platform"
+I,Gabrielle Lewis,North,Senior,0.92,Fri 4-6 PM,"Cybersecurity, CRM Tool"
+J,Daniel Warren PhD,North,Junior,0.93,Mon 2-4 PM,"Analytics Suite, Cybersecurity"
+K,Anthony Atkins,South,Mid,0.61,Wed 11-1 PM,"Analytics Suite, CRM Tool"
+L,Linda Martin,North,Mid,0.71,Fri 2-4 PM,"Cloud Platform, Analytics Suite, AI Assistant"
+M,Joel Burke,West,Senior,0.76,Fri 11-1 PM,"Cybersecurity, AI Assistant, Analytics Suite"
+N,Samuel Hill,East,Junior,0.72,Thu 11-1 PM,"AI Assistant, CRM Tool"
+O,Erica Aguilar,South,Senior,0.81,Thu 2-4 PM,"Cybersecurity, CRM Tool"
