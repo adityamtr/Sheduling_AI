@@ -1,0 +1,1 @@
+streamlit run ui/home_page.py --server.port 9999

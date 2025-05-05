@@ -43,11 +43,8 @@ class Agent_Generate_Interaction(ContextMethods):
         - Analyse profile details provides by user
         - Identify Customer Name, and other provided features
         - Generate a series of conversations between Customer and Financial Advisor
-            Here Financial Advisor is Trying to pitch/sell three products
-            1. A Mutual Fund Named 'AF cap' with annual returns of 9%
-            2. A ETF named 'QAR' with annual returns of 13%
-            3. A PPS Named 'AOX' with annual returns of 20%
-        - Generate transcript session of about 20 to 25 back and forth conversations
+        - Here Financial Advisor is Trying to pitch/sell three products
+        - Generate transcript session of about 20 to 25 back and forth conversations with consideration of user provided instructions
         
         Important Notes:
         
@@ -67,7 +64,9 @@ class Agent_Generate_Interaction(ContextMethods):
     def user_input_defination(self, data):
 
         prompt = f"""
-        Here are customer profile details and customer impressions to generate till end of session:
+        Here are customer profile details and customer impressions,
+        along with conversation flow to generate till end of session.
+        each step is provided with customer sentiment about that step, generate conversations accordingly.:
         
         {data}
         """
