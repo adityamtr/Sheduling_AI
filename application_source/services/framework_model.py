@@ -1,7 +1,10 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+from config.config import config
 import torch
 from pathlib import Path
 import os
+import requests
+import json
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 # print(device)
@@ -14,6 +17,23 @@ class SingletonMeta(type):
         if cls not in cls._instances:
             cls._instances[cls] = super().__call__(*args, **kwargs)
         return cls._instances[cls]
+
+class HostedLlm(metaclass=SingletonMeta):
+
+    def __init__(self):
+        self.host_link = config.get("llm", "host_link")
+        self.endpoint = "/call_qwen_llm"
+        self.path = f"{self.host_link}{self.endpoint}"
+    
+    def forward(self, context):
+        request_data = {"context": json.dumps(context)}
+        response = requests.post(self.path, json=request_data, verify = False)
+        if response.status_code == 200:
+            pass
+        else:
+            print(f"Error: {response.status_code}, {response.text}")
+        return response.json()["response"]
+
 
 class Qwen_llm(metaclass=SingletonMeta):
 
