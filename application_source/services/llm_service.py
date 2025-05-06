@@ -1,6 +1,11 @@
-from services.framework_model import Qwen_llm
+from services.framework_model import Qwen_llm, HostedLlm
+from config.config import config
 
-llm = Qwen_llm()
+print(config.get("llm", "access_type"))
+if config.get("llm", "access_type") == "hosted":
+    llm = HostedLlm()
+else:
+    llm = Qwen_llm()
 
 class Service_LLM():
 
