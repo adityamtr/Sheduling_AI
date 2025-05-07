@@ -16,7 +16,7 @@ df = pd.merge(customer_to_sales_rep, meeting_notes, on=['Customer ID', 'Sales Re
 final = pd.DataFrame()
 ## Loop to generate query for transcript agent and generate transcript + summarization
 for index, row in df.iterrows():
-    # print(row)
+    print(f"{index}/{len(df)}")
     query = ""
     client_id = row['Customer ID']
     sales_rep_id = row['Sales Rep ID']
