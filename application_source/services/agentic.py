@@ -1,4 +1,5 @@
-
+from pydantic import BaseModel
+from typing import List, Literal
 
 class ContextMethods():
 
@@ -125,3 +126,82 @@ class Agent_Generate_Summary(ContextMethods):
         """
 
         return prompt
+    
+
+class ConversationAnalysis(BaseModel):
+        sentiment: Literal["Positive", "Negative", "Neutral"]
+        products_marketed: int
+        products_marketed_list: List[str]
+        products_interested: int
+        products_interested_list: List[str]
+
+class AgentGenerateKPIs(ContextMethods):
+
+    def __init__(self):
+        self.context = []
+        self.example = """{
+                        "sentiment": "Positive",
+                        "products_marketed": 3,
+                        "products_marketed_list": ["Product A", "Product B", "Product C"],
+                        "products_interested": 2,
+                        "products_interested_list": ["Product A", "Product C"]
+                    }"""
+
+    def prompt_func(self, user_input=None):
+
+        self.add_role(role="syste", content=self.role_defination())
+        self.add_role(role="system", content=self.task_defination())
+        self.add_role(role="system", content=self.add_role())
+        self.add_role(role="user", content=self.user_input_defination(user_input))
+
+        return self.build_context()
+    
+    def role_defination(self):
+        prompt = f"""
+        You are expert content generator. 
+        You task is to generate a list of KPIS from a whole meeting transcript between a Financial Advisor and Customer.
+        """
+        return prompt
+    
+    def task_defination(self):
+        prompt = f"""
+        Your task is to analyse the conversations between a Sales Representative and Customer, and therby Extract the following pointers (KPIs):
+        
+        Below each pointer is provided along with their data type, values that it accepts and its definiton:
+
+            1 - sentiment: string (Positive, Negative, Neutral) ->  Over all sentiment of the conversation.
+            2 - products_marketed: int -> number of products marketed during the meeting.
+            3 - products_marketed_list: list -> Names of the  products marketed in form of a Python list. 
+            4 - products_interested: int -> Mumber of products the customer is interested in. 
+            5 - products_interested_list: list ->  Names of products the customer is interested in in form of a Python list. 
+
+        """
+        return prompt
+    
+    def response_format(self):
+
+        prompt = f"""Provide the output in form of a JSON only. 
+
+        Here is a provided Schema for the output to follow: 
+        {ConversationAnalysis.model_json_schema()}
+
+        Follow the below example to get an idea (Do not reply on this for facts.):
+        {self.example}
+
+        Do not provide any other text or explaination. Only the JSON format is needed. 
+        
+        """
+        return prompt
+    
+    def user_input_defination(self, data):
+        prompt = f"""
+        Here are transcript of meeting between Customer and Financial Advisor:
+
+        {data}
+        """
+
+        return prompt
+
+
+
+    
