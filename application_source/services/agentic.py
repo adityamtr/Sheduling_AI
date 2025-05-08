@@ -29,7 +29,7 @@ class Agent_Generate_Interaction(ContextMethods):
 
         prompt = f"""
         You are expert content generator. 
-        You task is to generate a whole meeting transcript between a Financial Advisor and Customer.
+        You task is to generate a whole meeting transcript between a seller and Customer.
         """
 
         return prompt
@@ -40,20 +40,21 @@ class Agent_Generate_Interaction(ContextMethods):
         
         You Task is:
         
-        - Analyse profile details provides by user
-        - Identify Customer Name, and other provided features
-        - Generate a series of conversations between Customer and Financial Advisor
-        - Here Financial Advisor is Trying to pitch/sell three products
+        - Analyse details provides by user
+        - Identify Customer Name, Seller Name and other provided features
+        - Generate a series of conversations between Customer and Seller
+        - Here Seller is Trying to pitch/sell few products, product list will be provided
         - Generate transcript session of about 20 to 25 back and forth conversations with consideration of user provided instructions
         
         Important Notes:
         
         - Return proper format of conversation, refer following style
             ** Customer **: <customer message here>
-            ** Advisor **: <advisor message here>
+            ** Sales Rep **: <seller message here>
             
             ** Customer **: <customer message here>
-            ** Advisor **: <advisor message here>
+            ** Sales Rep **: <seller message here>
+        - add provided product name and product at every mention of respective product in conversation
         - Return only generated conversations, nothing else is required
         - at least 20 conversation should be there in generated session transcript
             
@@ -64,9 +65,9 @@ class Agent_Generate_Interaction(ContextMethods):
     def user_input_defination(self, data):
 
         prompt = f"""
-        Here are customer profile details and customer impressions,
+        Here are product list, customer profile details and customer impressions,
         along with conversation flow to generate till end of session.
-        each step is provided with customer sentiment about that step, generate conversations accordingly.:
+        conclusion of conversation is also provided, generate conversations accordingly.:
         
         {data}
         """
