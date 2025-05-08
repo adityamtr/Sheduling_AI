@@ -43,6 +43,6 @@ while True:
         print("✅ Tunnel is healthy.")
     else:
         print("❌ Tunnel is down. Restarting...")
-        kill_existing_lt_processes()
+        # kill_existing_lt_processes()
         restart_tunnel()
     time.sleep(CHECK_INTERVAL)

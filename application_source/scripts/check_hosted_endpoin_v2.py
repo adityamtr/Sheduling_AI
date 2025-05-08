@@ -6,10 +6,10 @@ import signal
 import psutil  # install with: pip install psutil
 
 # Configuration
-TUNNEL_URL = "https://hostedqwen25mark1.loca.lt"
+TUNNEL_URL = "https://hostedqwen25mark2.loca.lt"
 CHECK_INTERVAL = 15 * 60  # seconds
 PORT = "9000"
-SUBDOMAIN = "hostedqwen25mark1"
+SUBDOMAIN = "hostedqwen25mark2"
 
 def is_tunnel_healthy(url):
     try:
@@ -43,6 +43,6 @@ while True:
         print("✅ Tunnel is healthy.")
     else:
         print("❌ Tunnel is down. Restarting...")
-        kill_existing_lt_processes()
+        # kill_existing_lt_processes()
         restart_tunnel()
     time.sleep(CHECK_INTERVAL)

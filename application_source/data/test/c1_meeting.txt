@@ -1,0 +1,39 @@
+**Meeting Start**: **Customer**: Hi Jim, how’s it going?
+
+**Sales Rep**: Hey Harvey! Everything’s good. I just wanted to check in on your paper supply situation. How can I assist you today?
+
+**Customer**: Hi Jim. We’re looking to increase our stock of Cardstock Paper. Do you have any deals or promotions available?
+
+**Sales Rep**: Absolutely, Harvey. Our Cardstock Paper (ProductD) has been very popular. We’re currently running a 10% discount on it as part of a limited-time offer. Would you like to take advantage of that?
+
+**Customer**: That sounds great. What’s the current status of the promotion?
+
+**Sales Rep**: It’s still active. We’ve had some delays in the past, but we’ve implemented new quality checks to ensure everything meets our high standards. How do you feel about that?
+
+**Customer**: I appreciate the transparency. So, what about delivery times? And do we need to place a minimum order to get bulk pricing?
+
+**Sales Rep**: Delivery times are usually within 5-7 business days. For bulk pricing, we require a minimum order of 500 units. We can certainly send you an updated pricing sheet if you’re interested.
+
+**Customer**: Sounds good. Can you send me that now?
+
+**Sales Rep**: Of course, Harvey. I’ll have it ready for you shortly. Is there anything else you’d like to know about these products?
+
+**Customer**: Actually, I’m curious about the sample process. How does that work?
+
+**Sales Rep**: No problem, Harvey. We can definitely send you some samples. Just let me know which sizes and quantities you’re interested in, and we’ll handle the rest.
+
+**Customer**: Perfect. Let’s go ahead and get those samples sent over. Thanks for your help!
+
+**Sales Rep**: Absolutely, Harvey. I’ll make sure to send them right away. If you have any other questions or concerns, don’t hesitate to reach out. I’ll follow up with you in a few days to see how you’re settling on the final decision.
+
+**Customer**: Sounds good. Thanks again, Jim.
+
+**Sales Rep**: You’re welcome, Harvey. Take care!
+
+**Meeting Close**: **Customer**: Hi Jim, I’ll be checking out some competitor quotes soon. Let me know if you need anything else.
+
+**Sales Rep**: Sure thing, Harvey. I’ll keep in touch. Have a great day!
+
+**Customer**: You too, Jim. See you around!
+
+**Sales Rep**: Absolutely, see you later!
