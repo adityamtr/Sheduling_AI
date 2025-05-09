@@ -19,7 +19,7 @@ class Service_LLM():
             data = data.replace(element, "")
         return data
 
-    def call_inference(self, context):
-        res = self.llm.forward(context)
+    def call_inference(self, context, is_json_response = False):
+        res = self.llm.forward(context, is_json_response)
         cleaned_res = self.cleanup(res)
         return cleaned_res
