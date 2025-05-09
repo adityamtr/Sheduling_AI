@@ -59,7 +59,7 @@ class Agent_Generate_Interaction(ContextMethods):
         - Identify Customer Name, Sales Representative Name and other provided features
         - Generate a series of conversations between Customer and Sales Representative
         - Here Sales Representative is Trying to pitch/sell few products, product list will be provided
-        - Generate transcript session of about 20 to 25 back and forth conversations with consideration of user provided instructions
+        - Generate transcript session of about 15 to 20 back and forth conversations with consideration of user provided instructions
         
         Important Notes:
         
@@ -71,7 +71,7 @@ class Agent_Generate_Interaction(ContextMethods):
             ** Sales Rep **: <Sales Representative message here>
         - add provided product name and product at every mention of respective product in conversation
         - Return only generated conversations, nothing else is required
-        - at least 20 conversation should be there in generated session transcript
+        - at least 10 conversation should be there in generated session transcript
             
         """
 
