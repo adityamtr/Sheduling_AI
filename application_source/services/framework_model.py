@@ -79,7 +79,7 @@ class HostedLlm(metaclass=SingletonMeta):
                         answer = message.content
 
                 usage = response.usage
-                print(usage)
+                # print(usage)
 
         except Exception as e:
             print(e, code)
