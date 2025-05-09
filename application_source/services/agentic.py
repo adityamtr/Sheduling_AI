@@ -1,6 +1,15 @@
 from pydantic import BaseModel
 from typing import List, Literal
 
+def strict_schema(schema):
+    if not isinstance(schema, dict):
+        return schema
+    if "properties" in schema.keys():
+        schema["additionalProperties"] = False
+    for key, value in schema.items():
+        value = strict_schema(value)
+    return schema
+
 class ContextMethods():
 
     def __init__(self):
@@ -16,6 +25,11 @@ class Agent_Generate_Interaction(ContextMethods):
 
     def __init__(self):
         self.context = []
+
+    def prompt_response_schema(self):
+        modelschema = ConversationAnalysis.model_json_schema()
+        schema = strict_schema(modelschema)
+        return False
 
     def prompt_func(self, user_input=None):
 
@@ -81,6 +95,11 @@ class Agent_Generate_Summary(ContextMethods):
     def __init__(self):
         self.context = []
 
+    def prompt_response_schema(self):
+        modelschema = ConversationAnalysis.model_json_schema()
+        schema = strict_schema(modelschema)
+        return False
+    
     def prompt_func(self, user_input=None):
         self.add_role(role="system", content=self.role_defination())
         self.add_role(role="system", content=self.task_defination())
@@ -126,7 +145,6 @@ class Agent_Generate_Summary(ContextMethods):
         """
 
         return prompt
-    
 
 class ConversationAnalysis(BaseModel):
         sentiment: Literal["Positive", "Negative", "Neutral"]
@@ -147,6 +165,12 @@ class AgentGenerateKPIs(ContextMethods):
                         "products_interested": <count of elements in products_interested_list>
                     }"""
 
+
+    def prompt_response_schema(self):
+        modelschema = ConversationAnalysis.model_json_schema()
+        schema = strict_schema(modelschema)
+        return schema
+
     def prompt_func(self, user_input=None):
 
         self.add_role(role="system", content=self.role_defination())
@@ -166,7 +190,7 @@ class AgentGenerateKPIs(ContextMethods):
     def task_defination(self):
         prompt = f"""
         Your task is:
-         - Analyse the conversations between a Sales Representative and Customer.
+         - Analyse the conversations between a Sales Representative and a Customer.
          - Identify mentions of product in conversation (identify products listed in product table only)
          - Identify who has mentioned which product
          - Extract the following pointers (KPIs):

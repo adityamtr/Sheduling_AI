@@ -25,7 +25,7 @@ for index, row in dummy_data.iterrows():
     new_row = row.to_dict()
 
     ## Calling kpi agent
-    orchestrator = Agent_Orchestrator(prompt_func=AgentGenerateKPIs().prompt_func)
+    orchestrator = Agent_Orchestrator(prompt_func=AgentGenerateKPIs().prompt_func,  is_json_response = AgentGenerateKPIs().prompt_response_schema())
     res = orchestrator.run(query)
     print(res)
     try:

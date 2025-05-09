@@ -55,7 +55,7 @@ class HostedLlm(metaclass=SingletonMeta):
             if isinstance(is_json_response, bool):
                 response_format = {"type": "json_object"}
             else:
-                response_format = {"type": "json_schema", "json_schema": {"shema": is_json_response, "name": "format_schema", "strict": True}}
+                response_format = {"type": "json_schema", "json_schema": {"schema": is_json_response, "name": "format_schema", "strict": True}}
 
         try:
 
