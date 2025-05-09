@@ -1,0 +1,7 @@
+﻿product_id,product_name,product_type,selling_price_per_unit
+P001,ProductA,Glossy Paper,15
+P002,ProductB,Matte Paper,12.5
+P003,ProductC,Recycled Paper,10
+P004,ProductD,Cardstock Paper,18
+P005,ProductE,Bond Paper,14
+P006,ProductF,Newsprint Paper,8
