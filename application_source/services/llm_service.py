@@ -11,6 +11,15 @@ class Service_LLM():
 
     def __init__(self):
         self.llm = llm
+        self.remove_elements = ["```json", "```python", "```"]
+
+    def cleanup(self, data):
+
+        for element in self.remove_elements:
+            data = data.replace(element, "")
+        return data
 
     def call_inference(self, context):
-        return self.llm.forward(context)
+        res = self.llm.forward(context)
+        cleaned_res = self.cleanup(res)
+        return cleaned_res

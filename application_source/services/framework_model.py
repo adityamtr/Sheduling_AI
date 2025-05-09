@@ -1,5 +1,8 @@
+from sympy.codegen.cxxnodes import using
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from config.config import config
+from services.singlton_arc import SingletonMeta
+from services.gpt_service import GPTService
 import torch
 from pathlib import Path
 import os
@@ -11,28 +14,78 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 root_path = Path(os.getcwd().split('application_source')[0] + 'application_source')
 # print(root_path)
 
-class SingletonMeta(type):
-    _instances = {}
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super().__call__(*args, **kwargs)
-        return cls._instances[cls]
+
+
+# class HostedLlm(metaclass=SingletonMeta):
+#
+#     def __init__(self):
+#         self.host_link = config.get("llm", "host_link")
+#         self.endpoint = "/call_qwen_llm"
+#         self.path = f"{self.host_link}{self.endpoint}"
+#
+#     def forward(self, context):
+#         request_data = {"context": json.dumps(context)}
+#         response = requests.post(self.path, json=request_data, verify = False)
+#         if response.status_code == 200:
+#             pass
+#         else:
+#             print(f"Error: {response.status_code}, {response.text}")
+#         return response.json()["response"]
 
 class HostedLlm(metaclass=SingletonMeta):
 
     def __init__(self):
-        self.host_link = config.get("llm", "host_link")
-        self.endpoint = "/call_qwen_llm"
-        self.path = f"{self.host_link}{self.endpoint}"
-    
-    def forward(self, context):
-        request_data = {"context": json.dumps(context)}
-        response = requests.post(self.path, json=request_data, verify = False)
-        if response.status_code == 200:
-            pass
+        self.service = config.get("llm", "use_service")
+        self.model_name = config.get("llm", "model_name")
+        if self.service == "openai":
+            self.client = GPTService().get_client()
         else:
-            print(f"Error: {response.status_code}, {response.text}")
-        return response.json()["response"]
+            pass
+
+    def forward(self, context, is_json_response=False):
+
+        client = self.client
+
+        answer = ""
+        code = ""
+
+        response_format = {"type":"text"}
+
+        if is_json_response:
+            if isinstance(is_json_response, bool):
+                response_format = {"type": "json_object"}
+            else:
+                response_format = {"type": "json_schema", "json_schema": {"shema": is_json_response, "name": "format_schema", "strict": True}}
+
+        try:
+
+            response = client.chat.completions.create(
+                model = self.model_name,
+                seed = 42,
+                temperature = 0.01,
+                messages = context,
+                max_completion_tokens = 4096,
+                response_format = response_format,
+                stream = False
+                )
+
+            if len(response.choices) > 0:
+                res = response.choices[0]
+                if res.finish_reason:
+                    code = res.finish_reason
+                if res.message:
+                    message = res.message
+                    if message.content:
+                        answer = message.content
+
+                usage = response.usage
+                print(usage)
+
+        except Exception as e:
+            print(e, code)
+            raise e
+
+        return answer
 
 
 class Qwen_llm(metaclass=SingletonMeta):
