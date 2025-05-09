@@ -1,0 +1,10 @@
+Customer ID,Customer Name,Last Purchase Date,Last Meeting Date,Last Purchase Amount ($),Discount (%),Product Type Last Purchased,#Purchases Last Q,Days Since Last Purchase,Purchase Freq/Q,Avg Annual Revenue ($),Last 12M Revenue ($),Customer Since,Sales Rep ID
+C001,Harvey Specter,2025-04-15,2025-04-01,450,10,Glossy Paper,4,21,4,5400,5200,2022-01-10,SR001
+C002,Mike Ross,2025-03-12,2025-02-28,380,5,Matte Paper,3,55,3,4200,4100,2023-04-20,SR001
+C003,Louis Litt,2025-01-20,2025-01-10,300,0,Recycled Paper,2,106,2,3200,2800,2021-09-14,SR001
+C004,Rachel Zane,2025-04-03,2025-03-20,250,8,Bond Paper,4,33,4,3900,4100,2022-05-22,SR002
+C005,Donna Paulsen,2025-02-25,2025-02-01,520,15,Cardstock Paper,2,70,2,5800,5400,2020-11-17,SR002
+C006,Katrina Bennett,2025-03-30,2025-03-10,410,5,Newsprint Paper,3,37,3,4300,4300,2023-07-04,SR002
+C007,Jessica Pearson,2025-01-15,2025-01-05,600,10,Glossy Paper,1,111,1,6100,6100,2021-02-11,SR003
+C008,Samantha Wheeler,2025-03-08,2025-03-01,480,7,Matte Paper,3,59,3,4700,4700,2023-01-19,SR003
+C009,Robert Zane,2025-04-10,2025-04-02,330,0,Recycled Paper,4,26,4,3600,3700,2022-09-09,SR003

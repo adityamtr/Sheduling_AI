@@ -30,7 +30,7 @@ class Agent_Generate_Interaction(ContextMethods):
 
         prompt = f"""
         You are expert content generator. 
-        You task is to generate a whole meeting transcript between a Financial Advisor and Customer.
+        You task is to generate a whole meeting transcript between a Sales Representative and Customer.
         """
 
         return prompt
@@ -41,20 +41,21 @@ class Agent_Generate_Interaction(ContextMethods):
         
         You Task is:
         
-        - Analyse profile details provides by user
-        - Identify Customer Name, and other provided features
-        - Generate a series of conversations between Customer and Financial Advisor
-        - Here Financial Advisor is Trying to pitch/sell three products
+        - Analyse details provides by user
+        - Identify Customer Name, Sales Representative Name and other provided features
+        - Generate a series of conversations between Customer and Sales Representative
+        - Here Sales Representative is Trying to pitch/sell few products, product list will be provided
         - Generate transcript session of about 20 to 25 back and forth conversations with consideration of user provided instructions
         
         Important Notes:
         
         - Return proper format of conversation, refer following style
-            ** Customer **: <customer message here>
-            ** Advisor **: <advisor message here>
+            ** Customer **: <Customer message here>
+            ** Sales Rep **: <Sales Representative message here>
             
-            ** Customer **: <customer message here>
-            ** Advisor **: <advisor message here>
+            ** Customer **: <Customer message here>
+            ** Sales Rep **: <Sales Representative message here>
+        - add provided product name and product at every mention of respective product in conversation
         - Return only generated conversations, nothing else is required
         - at least 20 conversation should be there in generated session transcript
             
@@ -65,9 +66,9 @@ class Agent_Generate_Interaction(ContextMethods):
     def user_input_defination(self, data):
 
         prompt = f"""
-        Here are customer profile details and customer impressions,
+        Here are product list, Customer profile details and Customer impressions,
         along with conversation flow to generate till end of session.
-        each step is provided with customer sentiment about that step, generate conversations accordingly.:
+        conclusion of conversation is also provided, generate conversations accordingly.:
         
         {data}
         """
@@ -90,7 +91,7 @@ class Agent_Generate_Summary(ContextMethods):
     def role_defination(self):
         prompt = f"""
         You are expert content analyser. 
-        You task is to analyse a whole meeting transcript between a Financial Advisor and Customer
+        You task is to analyse a whole meeting transcript between a Sales Representative and Customer
         And provide summarization
         """
 
@@ -101,13 +102,13 @@ class Agent_Generate_Summary(ContextMethods):
 
         You Task is:
 
-        - Analyse Conversations between Customer and Financial Advisor
-        - Identify usefull business points and exchanges
+        - Analyse Conversations between Customer and Sales Representative
+        - Identify useful business points and exchanges
         - Generate brief summary of conversations which includes
             1. Proper markdown format of headings and labels
             2. Primary points discussed
             3. Future scope discussed
-            4. Insight which help advisor to be able to convince customer
+            4. Insight which help advisor to be able to convince Customer
 
         Important Notes:
 
@@ -119,7 +120,7 @@ class Agent_Generate_Summary(ContextMethods):
 
     def user_input_defination(self, data):
         prompt = f"""
-        Here are transcript of meeting between Customer and Financial Advisor:
+        Here are transcript of meeting between Customer and Sales Representative:
 
         {data}
         """
@@ -129,28 +130,28 @@ class Agent_Generate_Summary(ContextMethods):
 
 class ConversationAnalysis(BaseModel):
         sentiment: Literal["Positive", "Negative", "Neutral"]
-        products_marketed: int
         products_marketed_list: List[str]
-        products_interested: int
+        products_marketed: int
         products_interested_list: List[str]
+        products_interested: int
 
 class AgentGenerateKPIs(ContextMethods):
 
     def __init__(self):
         self.context = []
         self.example = """{
-                        "sentiment": "Positive",
-                        "products_marketed": 3,
-                        "products_marketed_list": ["Product A", "Product B", "Product C"],
-                        "products_interested": 2,
-                        "products_interested_list": ["Product A", "Product C"]
+                        "sentiment": "<sentiment here>",
+                        "products_marketed_list": ["<product name> (<product type>)", "<product name> (<product type>)", "<product name> (<product type>)"],
+                        "products_marketed": <count of elements in products_marketed_list>,
+                        "products_interested_list": ["<product name> (<product type>)", "<product name> (<product type>)"],
+                        "products_interested": <count of elements in products_interested_list>
                     }"""
 
     def prompt_func(self, user_input=None):
 
-        self.add_role(role="syste", content=self.role_defination())
+        self.add_role(role="system", content=self.role_defination())
         self.add_role(role="system", content=self.task_defination())
-        self.add_role(role="system", content=self.add_role())
+        self.add_role(role="system", content=self.response_format())
         self.add_role(role="user", content=self.user_input_defination(user_input))
 
         return self.build_context()
@@ -158,25 +159,32 @@ class AgentGenerateKPIs(ContextMethods):
     def role_defination(self):
         prompt = f"""
         You are expert content generator. 
-        You task is to generate a list of KPIS from a whole meeting transcript between a Financial Advisor and Customer.
+        You task is to generate a list of KPIS from a whole meeting transcript between a Sales Representative and Customer.
         """
         return prompt
     
     def task_defination(self):
         prompt = f"""
-        Your task is to analyse the conversations between a Sales Representative and Customer, and therby Extract the following pointers (KPIs):
+        Your task is:
+         - Analyse the conversations between a Sales Representative and Customer.
+         - Identify mentions of product in conversation (identify products listed in product table only)
+         - Identify who has mentioned which product
+         - Extract the following pointers (KPIs):
         
-        Below each pointer is provided along with their data type, values that it accepts and its definiton:
+        Below each pointer is provided along with their data type, values that it accepts and its definition:
 
-            1 - sentiment: string (Positive, Negative, Neutral) ->  Over all sentiment of the conversation.
-            2 - products_marketed: int -> number of products marketed during the meeting.
-            3 - products_marketed_list: list -> Names of the  products marketed in form of a Python list. 
-            4 - products_interested: int -> Mumber of products the customer is interested in. 
-            5 - products_interested_list: list ->  Names of products the customer is interested in in form of a Python list. 
-
+            1 - sentiment: string (Positive, Negative, Neutral) ->  Over all sentiment of the conversation (based on Customer's willingness to make purchase)
+            2 - products_marketed_list: list -> Names of the products marketed or discussed by Sales Representative during the meeting in Python list format. 
+            3 - products_marketed: int -> Number of elements in above generated products_marketed_list.
+            4 - products_interested_list: list ->  Names of products the Customer seems to be genuinely interested in Python list format. 
+            5 - products_interested: int -> Number of elements in above generated products_interested_list.
+            
+        Important Notes:
+        - Products table will be given by user, identify these products only from transcript while generating above KPIs
+        - while adding any product in response add in this format <Product Name> (<Product Type>), identify product name and product type from given products table
         """
         return prompt
-    
+
     def response_format(self):
 
         prompt = f"""Provide the output in form of a JSON only. 
@@ -184,17 +192,14 @@ class AgentGenerateKPIs(ContextMethods):
         Here is a provided Schema for the output to follow: 
         {ConversationAnalysis.model_json_schema()}
 
-        Follow the below example to get an idea (Do not reply on this for facts.):
-        {self.example}
-
-        Do not provide any other text or explaination. Only the JSON format is needed. 
+        Do not provide any other text or explanation. Only the JSON format is needed. 
         
         """
         return prompt
     
     def user_input_defination(self, data):
         prompt = f"""
-        Here are transcript of meeting between Customer and Financial Advisor:
+        Here is product table and transcript of meeting between Customer and Sales Representative:
 
         {data}
         """

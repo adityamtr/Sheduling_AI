@@ -1,0 +1,49 @@
+**Meeting Start**:
+**Customer**: Hi Jim, how’s it going?
+
+**Sales Rep**: Hey Mike! Everything’s good. I just got off the phone with the printer techs, and they’re doing well. How can I help you today?
+
+**Customer**: Well, I’ve been using your paper for a while now, and I’m looking to stock up on some Bond Paper. Do you have any deals or promotions on that?
+
+**Sales Rep**: Absolutely, Mike. Our Bond Paper (ProductE) is always a hit. We’re running a special right now where it’s 15% off. It’s a great time to grab some!
+
+**Customer**: That sounds good. What kind of discounts do you offer for bulk orders? And what’s the minimum quantity needed?
+
+**Sales Rep**: For bulk orders, we offer a 10% discount per carton. The minimum order is 50 cartons. We can definitely send you an updated pricing sheet if you’re interested.
+
+**Customer**: Sure, that would be helpful. Also, I remember having some issues with print quality before. Have things improved since then?
+
+**Sales Rep**: Yes, Mike. We’ve made significant improvements in our fulfillment process. Quality control is top-notch now. As for compatibility, we test everything with various printers to ensure smooth printing.
+
+**Customer**: Great to hear that. Can you show me some samples? I’d like to see them before making a decision.
+
+**Sales Rep**: Of course, Mike. We can arrange that. By the way, do you mind if I send you an updated pricing sheet? It might help you make a better choice.
+
+**Customer**: No problem at all. Thanks for the offer.
+
+**Sales Rep**: Anytime, Mike. Just let me know when you’re ready to place your order. We’ll get those samples sent over as well.
+
+**Customer**: Sounds good. I’ll give you a call in a few days to finalize everything.
+
+**Sales Rep**: Perfect, Mike. I’ll be here waiting. Take care!
+
+**Customer**: Will do. Thanks, Jim.
+
+**Sales Rep**: You’re welcome! Talk to you soon.
+
+**Customer**: Bye.
+
+**Sales Rep**: Bye, Mike.
+
+**Meeting Close**:
+**Customer**: Jim, I think I’m ready to make a few purchases. Let’s go ahead and start with some Bond Paper (ProductE).
+
+**Sales Rep**: Great news, Mike! I’ll send over the samples and pricing sheet right away. We’ll get those orders in motion soon.
+
+**Customer**: Sounds good. Thanks again.
+
+**Sales Rep**: No problem at all. I’ll keep you posted on the progress. Take care!
+
+**Customer**: You too, Jim. See you soon.
+
+**Sales Rep**: See you then, Mike. Have a great day!

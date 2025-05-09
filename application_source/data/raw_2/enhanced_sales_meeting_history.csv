@@ -1,0 +1,211 @@
+Sales Rep ID,Customer ID,Meeting Timestamp,Meeting Notes,Meeting Duration (mins),Meeting Outcome,Meeting Mode
+SR001,C001,2024-12-25 12:00 AM,"**Meeting Start**: Jim Halpert greeted Harvey Specter and asked about their current paper supply situation. Harvey mentioned a need for more Cardstock Paper and wanted to hear about any ongoing offers. Jim explained that ProductD (Cardstock Paper) has been popular and is currently part of a limited-time 10% discount campaign.
+
+Harvey brought up a past issue regarding delayed delivery last quarter. Jim acknowledged this and assured that new quality checks have been implemented. They then discussed compatibility with printers and sample availability.
+
+Harvey was curious about delivery times and the minimum order requirement for bulk pricing. Jim clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Harvey is said they'd decide after checking competitor quotes. Jim will follow up in a few days.",52,Customer requested samples,In-person
+SR001,C001,2024-10-13 12:00 AM,"**Meeting Start**: Jim Halpert greeted Harvey Specter and asked about their current paper supply situation. Harvey mentioned a need for more Newsprint Paper and wanted to hear about any ongoing offers. Jim explained that ProductF (Newsprint Paper) has been popular and is currently part of a limited-time 15% discount campaign.
+
+Harvey brought up a past issue regarding delayed delivery last quarter. Jim acknowledged this and assured that fulfillment timelines have improved significantly. They then discussed compatibility with printers and sample availability.
+
+Harvey was curious about delivery times and the minimum order requirement for bulk pricing. Jim clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Harvey is needs internal approval but seems positive. Jim will follow up in a few days.",45,Customer confirmed purchase,Video Call
+SR001,C001,2024-12-21 12:00 AM,"**Meeting Start**: Jim Halpert greeted Harvey Specter and asked about their current paper supply situation. Harvey mentioned a need for more Bond Paper and wanted to hear about any ongoing offers. Jim explained that ProductE (Bond Paper) has been popular and is currently part of a limited-time 10% discount campaign.
+
+Harvey brought up a past issue regarding inconsistent print quality. Jim acknowledged this and assured that a pricing review was done to ensure competitiveness. They then discussed compatibility with printers and sample availability.
+
+Harvey was curious about delivery times and the minimum order requirement for bulk pricing. Jim clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Harvey is wants to trial a few products first. Jim will follow up in a few days.",44,Customer confirmed purchase,Phone Call
+SR001,C002,2024-12-03 12:00 AM,"**Meeting Start**: Jim Halpert greeted Mike Ross and asked about their current paper supply situation. Mike mentioned a need for more Bond Paper and wanted to hear about any ongoing offers. Jim explained that ProductE (Bond Paper) has been popular and is currently part of a limited-time 15% discount campaign.
+
+Mike brought up a past issue regarding inconsistent print quality. Jim acknowledged this and assured that fulfillment timelines have improved significantly. They then discussed compatibility with printers and sample availability.
+
+Mike was curious about delivery times and the minimum order requirement for bulk pricing. Jim clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Mike is wants to trial a few products first. Jim will follow up in a few days.",34,Customer confirmed purchase,In-person
+SR001,C002,2025-01-29 12:00 AM,"**Meeting Start**: Jim Halpert greeted Mike Ross and asked about their current paper supply situation. Mike mentioned a need for more Newsprint Paper and wanted to hear about any ongoing offers. Jim explained that ProductF (Newsprint Paper) has been popular and is currently part of a limited-time 12% discount campaign.
+
+Mike brought up a past issue regarding unexpectedly high cost on the last invoice. Jim acknowledged this and assured that fulfillment timelines have improved significantly. They then discussed compatibility with printers and sample availability.
+
+Mike was curious about delivery times and the minimum order requirement for bulk pricing. Jim clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Mike is wants to trial a few products first. Jim will follow up in a few days.",46,Customer declined for now,In-person
+SR001,C002,2024-12-17 12:00 AM,"**Meeting Start**: Jim Halpert greeted Mike Ross and asked about their current paper supply situation. Mike mentioned a need for more Matte Paper and wanted to hear about any ongoing offers. Jim explained that ProductB (Matte Paper) has been popular and is currently part of a limited-time 5% discount campaign.
+
+Mike brought up a past issue regarding unexpectedly high cost on the last invoice. Jim acknowledged this and assured that fulfillment timelines have improved significantly. They then discussed compatibility with printers and sample availability.
+
+Mike was curious about delivery times and the minimum order requirement for bulk pricing. Jim clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Mike is likely to place an order next week. Jim will follow up in a few days.",53,Customer needs internal approval,Video Call
+SR001,C003,2024-11-27 12:00 AM,"**Meeting Start**: Jim Halpert greeted Louis Litt and asked about their current paper supply situation. Louis mentioned a need for more Bond Paper and wanted to hear about any ongoing offers. Jim explained that ProductE (Bond Paper) has been popular and is currently part of a limited-time 15% discount campaign.
+
+Louis brought up a past issue regarding delayed delivery last quarter. Jim acknowledged this and assured that new quality checks have been implemented. They then discussed compatibility with printers and sample availability.
+
+Louis was curious about delivery times and the minimum order requirement for bulk pricing. Jim clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Louis is wants to trial a few products first. Jim will follow up in a few days.",56,Customer evaluating options,Video Call
+SR001,C003,2025-01-22 12:00 AM,"**Meeting Start**: Jim Halpert greeted Louis Litt and asked about their current paper supply situation. Louis mentioned a need for more Newsprint Paper and wanted to hear about any ongoing offers. Jim explained that ProductF (Newsprint Paper) has been popular and is currently part of a limited-time 5% discount campaign.
+
+Louis brought up a past issue regarding inconsistent print quality. Jim acknowledged this and assured that a pricing review was done to ensure competitiveness. They then discussed compatibility with printers and sample availability.
+
+Louis was curious about delivery times and the minimum order requirement for bulk pricing. Jim clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Louis is wants to trial a few products first. Jim will follow up in a few days.",33,Customer needs internal approval,Video Call
+SR001,C003,2025-03-22 12:00 AM,"**Meeting Start**: Jim Halpert greeted Louis Litt and asked about their current paper supply situation. Louis mentioned a need for more Cardstock Paper and wanted to hear about any ongoing offers. Jim explained that ProductD (Cardstock Paper) has been popular and is currently part of a limited-time 15% discount campaign.
+
+Louis brought up a past issue regarding unexpectedly high cost on the last invoice. Jim acknowledged this and assured that a pricing review was done to ensure competitiveness. They then discussed compatibility with printers and sample availability.
+
+Louis was curious about delivery times and the minimum order requirement for bulk pricing. Jim clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Louis is needs internal approval but seems positive. Jim will follow up in a few days.",47,Customer needs internal approval,Phone Call
+SR002,C004,2025-03-10 12:00 AM,"**Meeting Start**: Dwight Schrute greeted Rachel Zane and asked about their current paper supply situation. Rachel mentioned a need for more Bond Paper and wanted to hear about any ongoing offers. Dwight explained that ProductE (Bond Paper) has been popular and is currently part of a limited-time 12% discount campaign.
+
+Rachel brought up a past issue regarding unexpectedly high cost on the last invoice. Dwight acknowledged this and assured that fulfillment timelines have improved significantly. They then discussed compatibility with printers and sample availability.
+
+Rachel was curious about delivery times and the minimum order requirement for bulk pricing. Dwight clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Rachel is said they'd decide after checking competitor quotes. Dwight will follow up in a few days.",30,Customer confirmed purchase,Email Follow-up
+SR002,C004,2024-12-14 12:00 AM,"**Meeting Start**: Dwight Schrute greeted Rachel Zane and asked about their current paper supply situation. Rachel mentioned a need for more Glossy Paper and wanted to hear about any ongoing offers. Dwight explained that ProductA (Glossy Paper) has been popular and is currently part of a limited-time 15% discount campaign.
+
+Rachel brought up a past issue regarding delayed delivery last quarter. Dwight acknowledged this and assured that a pricing review was done to ensure competitiveness. They then discussed compatibility with printers and sample availability.
+
+Rachel was curious about delivery times and the minimum order requirement for bulk pricing. Dwight clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Rachel is wants to trial a few products first. Dwight will follow up in a few days.",54,Customer evaluating options,Email Follow-up
+SR002,C004,2025-02-20 12:00 AM,"**Meeting Start**: Dwight Schrute greeted Rachel Zane and asked about their current paper supply situation. Rachel mentioned a need for more Matte Paper and wanted to hear about any ongoing offers. Dwight explained that ProductB (Matte Paper) has been popular and is currently part of a limited-time 12% discount campaign.
+
+Rachel brought up a past issue regarding unexpectedly high cost on the last invoice. Dwight acknowledged this and assured that fulfillment timelines have improved significantly. They then discussed compatibility with printers and sample availability.
+
+Rachel was curious about delivery times and the minimum order requirement for bulk pricing. Dwight clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Rachel is likely to place an order next week. Dwight will follow up in a few days.",30,Customer declined for now,Email Follow-up
+SR002,C004,2025-01-24 12:00 AM,"**Meeting Start**: Dwight Schrute greeted Rachel Zane and asked about their current paper supply situation. Rachel mentioned a need for more Newsprint Paper and wanted to hear about any ongoing offers. Dwight explained that ProductF (Newsprint Paper) has been popular and is currently part of a limited-time 10% discount campaign.
+
+Rachel brought up a past issue regarding inconsistent print quality. Dwight acknowledged this and assured that a pricing review was done to ensure competitiveness. They then discussed compatibility with printers and sample availability.
+
+Rachel was curious about delivery times and the minimum order requirement for bulk pricing. Dwight clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Rachel is needs internal approval but seems positive. Dwight will follow up in a few days.",20,Customer declined for now,Video Call
+SR002,C005,2025-02-06 12:00 AM,"**Meeting Start**: Dwight Schrute greeted Donna Paulsen and asked about their current paper supply situation. Donna mentioned a need for more Cardstock Paper and wanted to hear about any ongoing offers. Dwight explained that ProductD (Cardstock Paper) has been popular and is currently part of a limited-time 10% discount campaign.
+
+Donna brought up a past issue regarding delayed delivery last quarter. Dwight acknowledged this and assured that fulfillment timelines have improved significantly. They then discussed compatibility with printers and sample availability.
+
+Donna was curious about delivery times and the minimum order requirement for bulk pricing. Dwight clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Donna is said they'd decide after checking competitor quotes. Dwight will follow up in a few days.",37,Customer needs internal approval,Email Follow-up
+SR002,C005,2024-10-27 12:00 AM,"**Meeting Start**: Dwight Schrute greeted Donna Paulsen and asked about their current paper supply situation. Donna mentioned a need for more Recycled Paper and wanted to hear about any ongoing offers. Dwight explained that ProductC (Recycled Paper) has been popular and is currently part of a limited-time 12% discount campaign.
+
+Donna brought up a past issue regarding inconsistent print quality. Dwight acknowledged this and assured that fulfillment timelines have improved significantly. They then discussed compatibility with printers and sample availability.
+
+Donna was curious about delivery times and the minimum order requirement for bulk pricing. Dwight clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Donna is wants to trial a few products first. Dwight will follow up in a few days.",22,Customer requested samples,In-person
+SR002,C005,2025-01-15 12:00 AM,"**Meeting Start**: Dwight Schrute greeted Donna Paulsen and asked about their current paper supply situation. Donna mentioned a need for more Matte Paper and wanted to hear about any ongoing offers. Dwight explained that ProductB (Matte Paper) has been popular and is currently part of a limited-time 10% discount campaign.
+
+Donna brought up a past issue regarding delayed delivery last quarter. Dwight acknowledged this and assured that new quality checks have been implemented. They then discussed compatibility with printers and sample availability.
+
+Donna was curious about delivery times and the minimum order requirement for bulk pricing. Dwight clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Donna is likely to place an order next week. Dwight will follow up in a few days.",22,Customer confirmed purchase,Phone Call
+SR002,C006,2025-02-17 12:00 AM,"**Meeting Start**: Dwight Schrute greeted Katrina Bennett and asked about their current paper supply situation. Katrina mentioned a need for more Matte Paper and wanted to hear about any ongoing offers. Dwight explained that ProductB (Matte Paper) has been popular and is currently part of a limited-time 10% discount campaign.
+
+Katrina brought up a past issue regarding unexpectedly high cost on the last invoice. Dwight acknowledged this and assured that new quality checks have been implemented. They then discussed compatibility with printers and sample availability.
+
+Katrina was curious about delivery times and the minimum order requirement for bulk pricing. Dwight clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Katrina is wants to trial a few products first. Dwight will follow up in a few days.",19,Customer declined for now,Phone Call
+SR002,C006,2024-10-21 12:00 AM,"**Meeting Start**: Dwight Schrute greeted Katrina Bennett and asked about their current paper supply situation. Katrina mentioned a need for more Bond Paper and wanted to hear about any ongoing offers. Dwight explained that ProductE (Bond Paper) has been popular and is currently part of a limited-time 5% discount campaign.
+
+Katrina brought up a past issue regarding delayed delivery last quarter. Dwight acknowledged this and assured that fulfillment timelines have improved significantly. They then discussed compatibility with printers and sample availability.
+
+Katrina was curious about delivery times and the minimum order requirement for bulk pricing. Dwight clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Katrina is needs internal approval but seems positive. Dwight will follow up in a few days.",26,Customer requested samples,Email Follow-up
+SR002,C006,2025-02-18 12:00 AM,"**Meeting Start**: Dwight Schrute greeted Katrina Bennett and asked about their current paper supply situation. Katrina mentioned a need for more Matte Paper and wanted to hear about any ongoing offers. Dwight explained that ProductB (Matte Paper) has been popular and is currently part of a limited-time 10% discount campaign.
+
+Katrina brought up a past issue regarding delayed delivery last quarter. Dwight acknowledged this and assured that new quality checks have been implemented. They then discussed compatibility with printers and sample availability.
+
+Katrina was curious about delivery times and the minimum order requirement for bulk pricing. Dwight clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Katrina is likely to place an order next week. Dwight will follow up in a few days.",23,Customer requested samples,Email Follow-up
+SR003,C007,2025-03-16 12:00 AM,"**Meeting Start**: Andy Bernard greeted Jessica Pearson and asked about their current paper supply situation. Jessica mentioned a need for more Cardstock Paper and wanted to hear about any ongoing offers. Andy explained that ProductD (Cardstock Paper) has been popular and is currently part of a limited-time 5% discount campaign.
+
+Jessica brought up a past issue regarding delayed delivery last quarter. Andy acknowledged this and assured that fulfillment timelines have improved significantly. They then discussed compatibility with printers and sample availability.
+
+Jessica was curious about delivery times and the minimum order requirement for bulk pricing. Andy clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Jessica is likely to place an order next week. Andy will follow up in a few days.",25,Customer declined for now,Email Follow-up
+SR003,C007,2025-02-22 12:00 AM,"**Meeting Start**: Andy Bernard greeted Jessica Pearson and asked about their current paper supply situation. Jessica mentioned a need for more Glossy Paper and wanted to hear about any ongoing offers. Andy explained that ProductA (Glossy Paper) has been popular and is currently part of a limited-time 10% discount campaign.
+
+Jessica brought up a past issue regarding unexpectedly high cost on the last invoice. Andy acknowledged this and assured that new quality checks have been implemented. They then discussed compatibility with printers and sample availability.
+
+Jessica was curious about delivery times and the minimum order requirement for bulk pricing. Andy clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Jessica is likely to place an order next week. Andy will follow up in a few days.",59,Customer needs internal approval,In-person
+SR003,C007,2024-11-08 12:00 AM,"**Meeting Start**: Andy Bernard greeted Jessica Pearson and asked about their current paper supply situation. Jessica mentioned a need for more Matte Paper and wanted to hear about any ongoing offers. Andy explained that ProductB (Matte Paper) has been popular and is currently part of a limited-time 10% discount campaign.
+
+Jessica brought up a past issue regarding delayed delivery last quarter. Andy acknowledged this and assured that a pricing review was done to ensure competitiveness. They then discussed compatibility with printers and sample availability.
+
+Jessica was curious about delivery times and the minimum order requirement for bulk pricing. Andy clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Jessica is wants to trial a few products first. Andy will follow up in a few days.",60,Customer declined for now,In-person
+SR003,C007,2024-12-23 12:00 AM,"**Meeting Start**: Andy Bernard greeted Jessica Pearson and asked about their current paper supply situation. Jessica mentioned a need for more Cardstock Paper and wanted to hear about any ongoing offers. Andy explained that ProductD (Cardstock Paper) has been popular and is currently part of a limited-time 5% discount campaign.
+
+Jessica brought up a past issue regarding delayed delivery last quarter. Andy acknowledged this and assured that a pricing review was done to ensure competitiveness. They then discussed compatibility with printers and sample availability.
+
+Jessica was curious about delivery times and the minimum order requirement for bulk pricing. Andy clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Jessica is said they'd decide after checking competitor quotes. Andy will follow up in a few days.",43,Customer declined for now,Phone Call
+SR003,C008,2024-11-24 12:00 AM,"**Meeting Start**: Andy Bernard greeted Samantha Wheeler and asked about their current paper supply situation. Samantha mentioned a need for more Cardstock Paper and wanted to hear about any ongoing offers. Andy explained that ProductD (Cardstock Paper) has been popular and is currently part of a limited-time 15% discount campaign.
+
+Samantha brought up a past issue regarding delayed delivery last quarter. Andy acknowledged this and assured that new quality checks have been implemented. They then discussed compatibility with printers and sample availability.
+
+Samantha was curious about delivery times and the minimum order requirement for bulk pricing. Andy clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Samantha is likely to place an order next week. Andy will follow up in a few days.",30,Customer needs internal approval,Email Follow-up
+SR003,C008,2024-10-14 12:00 AM,"**Meeting Start**: Andy Bernard greeted Samantha Wheeler and asked about their current paper supply situation. Samantha mentioned a need for more Recycled Paper and wanted to hear about any ongoing offers. Andy explained that ProductC (Recycled Paper) has been popular and is currently part of a limited-time 10% discount campaign.
+
+Samantha brought up a past issue regarding delayed delivery last quarter. Andy acknowledged this and assured that a pricing review was done to ensure competitiveness. They then discussed compatibility with printers and sample availability.
+
+Samantha was curious about delivery times and the minimum order requirement for bulk pricing. Andy clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Samantha is said they'd decide after checking competitor quotes. Andy will follow up in a few days.",57,Customer requested samples,Video Call
+SR003,C008,2025-02-16 12:00 AM,"**Meeting Start**: Andy Bernard greeted Samantha Wheeler and asked about their current paper supply situation. Samantha mentioned a need for more Recycled Paper and wanted to hear about any ongoing offers. Andy explained that ProductC (Recycled Paper) has been popular and is currently part of a limited-time 15% discount campaign.
+
+Samantha brought up a past issue regarding inconsistent print quality. Andy acknowledged this and assured that a pricing review was done to ensure competitiveness. They then discussed compatibility with printers and sample availability.
+
+Samantha was curious about delivery times and the minimum order requirement for bulk pricing. Andy clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Samantha is wants to trial a few products first. Andy will follow up in a few days.",23,Customer declined for now,In-person
+SR003,C008,2025-01-02 12:00 AM,"**Meeting Start**: Andy Bernard greeted Samantha Wheeler and asked about their current paper supply situation. Samantha mentioned a need for more Cardstock Paper and wanted to hear about any ongoing offers. Andy explained that ProductD (Cardstock Paper) has been popular and is currently part of a limited-time 12% discount campaign.
+
+Samantha brought up a past issue regarding inconsistent print quality. Andy acknowledged this and assured that a pricing review was done to ensure competitiveness. They then discussed compatibility with printers and sample availability.
+
+Samantha was curious about delivery times and the minimum order requirement for bulk pricing. Andy clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Samantha is wants to trial a few products first. Andy will follow up in a few days.",53,Customer needs internal approval,Email Follow-up
+SR003,C009,2025-03-04 12:00 AM,"**Meeting Start**: Andy Bernard greeted Robert Zane and asked about their current paper supply situation. Robert mentioned a need for more Cardstock Paper and wanted to hear about any ongoing offers. Andy explained that ProductD (Cardstock Paper) has been popular and is currently part of a limited-time 15% discount campaign.
+
+Robert brought up a past issue regarding unexpectedly high cost on the last invoice. Andy acknowledged this and assured that new quality checks have been implemented. They then discussed compatibility with printers and sample availability.
+
+Robert was curious about delivery times and the minimum order requirement for bulk pricing. Andy clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Robert is wants to trial a few products first. Andy will follow up in a few days.",21,Customer evaluating options,In-person
+SR003,C009,2024-10-29 12:00 AM,"**Meeting Start**: Andy Bernard greeted Robert Zane and asked about their current paper supply situation. Robert mentioned a need for more Cardstock Paper and wanted to hear about any ongoing offers. Andy explained that ProductD (Cardstock Paper) has been popular and is currently part of a limited-time 12% discount campaign.
+
+Robert brought up a past issue regarding delayed delivery last quarter. Andy acknowledged this and assured that a pricing review was done to ensure competitiveness. They then discussed compatibility with printers and sample availability.
+
+Robert was curious about delivery times and the minimum order requirement for bulk pricing. Andy clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Robert is wants to trial a few products first. Andy will follow up in a few days.",21,Customer needs internal approval,Email Follow-up
+SR003,C009,2024-12-14 12:00 AM,"**Meeting Start**: Andy Bernard greeted Robert Zane and asked about their current paper supply situation. Robert mentioned a need for more Recycled Paper and wanted to hear about any ongoing offers. Andy explained that ProductC (Recycled Paper) has been popular and is currently part of a limited-time 12% discount campaign.
+
+Robert brought up a past issue regarding delayed delivery last quarter. Andy acknowledged this and assured that fulfillment timelines have improved significantly. They then discussed compatibility with printers and sample availability.
+
+Robert was curious about delivery times and the minimum order requirement for bulk pricing. Andy clarified both and offered to send an updated pricing sheet.
+
+**Meeting Close**: Robert is likely to place an order next week. Andy will follow up in a few days.",31,Customer evaluating options,Video Call
