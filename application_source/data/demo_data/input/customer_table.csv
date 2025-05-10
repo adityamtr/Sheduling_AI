@@ -1,0 +1,10 @@
+﻿customer_id,customer_name,email,associated_salesrep_id,last_purchase_date,last_meeting_date,last_purchase_amount,last_purchase_percent_discount,last_purchase_product_type,products_purchase_last_qtr,days_since_last_purchase,purchase_freq_per_qtr,avg_annual_sales,L12M_sales,customer_since
+C001,Harvey Specter,harvey@pearsonspecter.com,SR001,15-04-2025,01-04-2025,450,10,Glossy Paper,4,21,4,5400,5200,10-01-2022
+C002,Mike Ross,mike.ross@pearsonspecter.com,SR001,12-03-2025,28-02-2025,380,5,Matte Paper,3,55,3,4200,4100,20-04-2023
+C003,Louis Litt,louis.litt@pearsonspecter.com,SR001,20-01-2025,10-01-2025,300,0,Recycled Paper,2,106,2,3200,2800,14-09-2021
+C004,Rachel Zane,rachel.zane@pearsonspecter.com,SR002,03-04-2025,20-03-2025,250,8,Bond Paper,4,33,4,3900,4100,22-05-2022
+C005,Donna Paulsen,donna.paulson@pearsonspecter.com,SR002,25-02-2025,01-02-2025,520,15,Cardstock Paper,2,70,2,5800,5400,17-11-2020
+C006,Katrina Bennett,katrina.bennett@pearsonspecter.com,SR002,30-03-2025,10-03-2025,410,5,Newsprint Paper,3,37,3,4300,4300,04-07-2023
+C007,Jessica Pearson,jessica@pearsonspecter.com,SR002,15-01-2025,05-01-2025,600,10,Glossy Paper,1,111,1,6100,6100,11-02-2021
+C008,Samantha Wheeler,samantha.wheeler@pearsonspecter.com,SR002,08-03-2025,01-03-2025,480,7,Matte Paper,3,59,3,4700,4700,19-01-2023
+C009,Robert Zane,robert@pearsonspecter.com,SR002,10-04-2025,02-04-2025,330,0,Recycled Paper,4,26,4,3600,3700,09-09-2022

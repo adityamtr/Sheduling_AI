@@ -1,0 +1,5 @@
+associated_salesrep_id,customer_id,customer_name,priority_score
+SR001,C002,Mike Ross,0.43034490166003403
+SR001,C003,Louis Litt,0.41072813601449243
+SR002,C007,Jessica Pearson,0.6
+SR002,C005,Donna Paulsen,0.536475262451274
