@@ -14,17 +14,22 @@ from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+from services.db_controller import DBController
+from services.agent_controller import Agent_Controller
+
 # --- Configuration ---
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
-CREDENTIALS_FILE = 'config/credentials.json'
-TOKEN_PICKLE_FILE = 'config/token.pickle'
-SESSION_STATE_BACKUP_FILE = 'config/session_backup.json'  # For OAuth state persistence
+CREDENTIALS_FILE = 'secrets/credentials.json'
+TOKEN_PICKLE_FILE = 'secrets/token.pickle'
+SESSION_STATE_BACKUP_FILE = 'secrets/session_backup.json'  # For OAuth state persistence
 REDIRECT_URI = 'http://localhost:8501/'  # Must match Google Cloud Console configuration
 
 WORKING_HOUR_START = 9
 WORKING_HOUR_END = 17
 NUM_DAYS_TO_CHECK = 14
 
+controller = DBController()
+agents = Agent_Controller()
 
 # --- Session State Backup ---
 def backup_session_state_for_oauth():
@@ -322,8 +327,32 @@ with st.form("transcript_upload_form", clear_on_submit=True):
                     valid_submission = False
                     break
 
+            ###
+            customers_list = controller.get_customers_list(seller_id=st.session_state.user)
+
+            for data in processed_data:
+                if data['client_name'].lower().replace('_', ' ') not in customers_list:
+                    valid_submission = False
+                    st.warning(f"Error finding Assocated Customer: {data['client_name'].replace('_', ' ')}")
+
             if valid_submission:
+
                 st.session_state.transcript_data = processed_data
+                # controller.insert_summary_kpi(seller_id=st.session_state.user,
+                #                               customer_name='Robert_Zane',
+                #                               transcript="",
+                #                               summary="",
+                #                               kpis={})
+
+                with st.spinner("Summary generation & KPIs extraction..."):
+                    for data in processed_data:
+                        summary, kpis = agents.information_extract(transcript_data=data['content'])
+                        controller.insert_summary_kpi(seller_id=st.session_state.user,
+                                                     customer_name=data["client_name"],
+                                                     transcript=data['content'],
+                                                     summary=summary,
+                                                     kpis=kpis)
+
                 # Reset subsequent step states
                 for key in ['analysis_results', 'suggested_schedule', 'free_slots_data', 'show_auth_flow',
                             'auth_purpose', 'auth_url', 'auth_flow_started', 'show_auth_flow_intended']:
@@ -334,13 +363,14 @@ with st.form("transcript_upload_form", clear_on_submit=True):
 # Section 2: Actions after transcript upload
 if st.session_state.transcript_data:
     st.header("2. Choose Your Next Step")
-    st.write(f"Clients to process: {', '.join([item['client_name'] for item in st.session_state.transcript_data])}")
+    # st.write(f"Clients to process: {', '.join([item['client_name'] for item in st.session_state.transcript_data])}")
 
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Analyse Transcripts & Prioritize Clients"):
             with st.spinner("Analyzing transcripts..."):
-                st.session_state.analysis_results = analyse_transcripts(st.session_state.transcript_data)
+                st.session_state.analysis_results = agents.priority_results_generation(seller_id=st.session_state.user)
+                # st.session_state.analysis_results = analyse_transcripts(st.session_state.transcript_data)
             # Reset states for scheduling if analysis is re-run
             for key in ['suggested_schedule', 'show_auth_flow', 'auth_purpose', 'free_slots_data',
                         'auth_url', 'auth_flow_started', 'show_auth_flow_intended']:
@@ -402,7 +432,7 @@ if st.session_state.get('show_auth_flow', False):
                 backup_session_state_for_oauth()  # Save state before redirect
 
                 flow = get_google_oauth_flow()
-                authorization_url, _ = flow.authorization_url(access_type='offline', include_granted_scopes='true')
+                authorization_url, _ = flow.authorization_url(access_type='offline', include_granted_scopes='true', state=st.session_state.user)
 
                 st.session_state.auth_url = authorization_url
                 st.session_state.auth_flow_started = True
@@ -422,6 +452,7 @@ if st.session_state.get('show_auth_flow', False):
 
     elif current_credentials and current_credentials.valid:  # User is authenticated
         st.success("Successfully authenticated with Google Calendar.")
+        st.session_state.auth_purpose = 'schedule_meetings'
         if st.button("Sign Out from Google"):
             clear_all_auth_state()
             st.rerun()
