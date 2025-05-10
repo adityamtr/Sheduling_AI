@@ -16,9 +16,9 @@ from googleapiclient.errors import HttpError
 
 # --- Configuration ---
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
-CREDENTIALS_FILE = 'config/credentials.json'
-TOKEN_PICKLE_FILE = 'config/token.pickle'
-SESSION_STATE_BACKUP_FILE = 'config/session_backup.json'  # For OAuth state persistence
+CREDENTIALS_FILE = 'secrets/credentials.json'
+TOKEN_PICKLE_FILE = 'secrets/token.pickle'
+SESSION_STATE_BACKUP_FILE = 'secrets/session_backup.json'  # For OAuth state persistence
 REDIRECT_URI = 'http://localhost:8501/'  # Must match Google Cloud Console configuration
 
 WORKING_HOUR_START = 9
