@@ -130,8 +130,10 @@ class PriorityModel(metaclass=SingletonMeta):
         return df
 
 
-    def get_top_customers_df(self, df: pd.DataFrame, top_n=2):
+    def get_top_customers_df(self, df: pd.DataFrame, top_n=None):
         logging.info("Getting top priority customers per sales rep...")
+        if not top_n:
+            top_n = self.visits_threshold
         top_priority = (
             df.sort_values(["associated_salesrep_id", "priority_score"], ascending=[True, False])
             .groupby("associated_salesrep_id")
@@ -143,7 +145,6 @@ class PriorityModel(metaclass=SingletonMeta):
     def get_priority_order(self, df, salesrep_id):
         filtered = df[df["associated_salesrep_id"] == salesrep_id]
         sorted_customers = filtered.sort_values(by="priority_score", ascending=False)
-        sorted_customers = sorted_customers.head(self.visits_threshold)
         return sorted_customers, sorted_customers["customer_name"].tolist()
 
 
@@ -170,7 +171,9 @@ class PriorityModel(metaclass=SingletonMeta):
 
         analysis = {}
         for i, row in priority_df.iterrows():
-            analysis[row['customer_name']] = {'summary':"", 'score':round(row['priority_score']*100, 2)}
+            analysis[row['customer_name']] = {'summary': "",
+                                              'score': round(row['priority_score']*100, 2),
+                                              'customer_id': row['customer_id']}
 
         analysis['priority_order'] = ls
         return analysis

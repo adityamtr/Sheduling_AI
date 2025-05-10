@@ -1,11 +1,15 @@
 from datetime import datetime
+import pandas as pd
+
 from services.db_service import SQLiteDB
 from services.singlton_arc import SingletonMeta
+from config.config import config
 
 class DBController(metaclass=SingletonMeta):
 
     def __init__(self):
         self.db = SQLiteDB()
+        self.n_records = int(config.get("optimization", "records_analysis_threshold"))
 
     def validate_seller(self, seller_id):
         query_dict = {
@@ -100,4 +104,21 @@ class DBController(metaclass=SingletonMeta):
         kpi_table = self.db.fetch_json(query_dict)
 
         return customer_table, kpi_table
+
+    def get_reasoning_requirements(self, seller_id, customer_id):
+
+        query_dict = {
+            "table": "kpi",
+            "columns": ["timestamp", "transcript", "summary", "sentiment", "products_marketed_list", "products_interested_list"],
+            "where": {"salesrep_id": seller_id, "customer_id": customer_id}
+        }
+        kpi_data = self.db.fetch_json(query_dict)
+        kpi_data['timestamp'] = pd.to_datetime(kpi_data['timestamp'], format='%d-%m-%Y %H:%M')
+        kpi_data = kpi_data.sort_values(by='timestamp', ascending=True).reset_index(drop=True)
+        kpi_data = kpi_data.tail(self.n_records)
+        kpi_data = kpi_data.reset_index(drop=True)
+
+        return kpi_data
+
+
 
