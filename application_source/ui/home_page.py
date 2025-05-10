@@ -1,9 +1,10 @@
 import streamlit as st
 import time
-from services.db_service import SQLiteDB
-import urllib.parse
+from services.db_controller import DBController
+from services.agent_controller import Agent_Controller  ## only to load and cache at start
 
 st.set_page_config(page_title="Login", layout="wide", initial_sidebar_state="collapsed")
+controller = DBController()
 
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
@@ -13,12 +14,6 @@ if "user" not in st.session_state:
 
 if "user_name" not in st.session_state:
     st.session_state.user_name = ""
-
-if "db" not in st.session_state:
-    st.session_state.db = SQLiteDB()
-
-if "state_value" not in st.session_state:
-    st.session_state.state_value = {}
 
 params = st.query_params
 
@@ -40,18 +35,10 @@ def login():
         password = st.text_input("Password :", type="password")
 
         if button_col[int(divs/2)].button("Login"):
-            query_dict = {
-                "table": "salesrep",
-                "columns": ["salesrep_id", "first_name", "last_name"],
-                "where": {"salesrep_id": userid}
-            }
-            df = st.session_state.db.fetch_json(query_dict)
-            df = df.drop_duplicates()
-
-            if len(df) > 0 and df.iloc[0]['salesrep_id'] == userid:
+            validation = controller.validate_seller(userid)
+            if validation:
                 st.session_state.logged_in = True
                 st.session_state.user = userid
-                st.session_state.user_name = f"{df.iloc[0]['first_name']} {df.iloc[0]['last_name']}"
                 st.success("Login successful! Redirecting to dashboard...")
                 time.sleep(1)
                 st.rerun()  # Refresh to trigger navigation

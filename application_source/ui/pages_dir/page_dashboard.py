@@ -14,6 +14,9 @@ from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+from services.db_controller import DBController
+from services.agent_controller import Agent_Controller
+
 # --- Configuration ---
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 CREDENTIALS_FILE = 'secrets/credentials.json'
@@ -25,6 +28,8 @@ WORKING_HOUR_START = 9
 WORKING_HOUR_END = 17
 NUM_DAYS_TO_CHECK = 14
 
+controller = DBController()
+agents = Agent_Controller()
 
 # --- Session State Backup ---
 def backup_session_state_for_oauth():
@@ -323,15 +328,7 @@ with st.form("transcript_upload_form", clear_on_submit=True):
                     break
 
             ###
-            query_dict = {
-                "table": "customer",
-                "columns": ["customer_id", "customer_name"],
-                "where": {"associated_salesrep_id": st.session_state.user}
-            }
-
-            associated_customers = st.session_state.db.fetch_json(query_dict)
-            customers_list = associated_customers["customer_name"].tolist()
-            customers_list = [name.lower() for name in customers_list]
+            customers_list = controller.get_customers_list(seller_id=st.session_state.user)
 
             for data in processed_data:
                 if data['client_name'].lower().replace('_', ' ') not in customers_list:
@@ -339,7 +336,23 @@ with st.form("transcript_upload_form", clear_on_submit=True):
                     st.warning(f"Error finding Assocated Customer: {data['client_name'].replace('_', ' ')}")
 
             if valid_submission:
+
                 st.session_state.transcript_data = processed_data
+                # controller.insert_summary_kpi(seller_id=st.session_state.user,
+                #                               customer_name='Robert_Zane',
+                #                               transcript="",
+                #                               summary="",
+                #                               kpis={})
+
+                with st.spinner("Summary generation & KPIs extraction..."):
+                    for data in processed_data:
+                        summary, kpis = agents.information_extract(transcript_data=data['content'])
+                        controller.insert_summary_kpi(seller_id=st.session_state.user,
+                                                     customer_name=data["client_name"],
+                                                     transcript=data['content'],
+                                                     summary=summary,
+                                                     kpis=kpis)
+
                 # Reset subsequent step states
                 for key in ['analysis_results', 'suggested_schedule', 'free_slots_data', 'show_auth_flow',
                             'auth_purpose', 'auth_url', 'auth_flow_started', 'show_auth_flow_intended']:
@@ -350,13 +363,14 @@ with st.form("transcript_upload_form", clear_on_submit=True):
 # Section 2: Actions after transcript upload
 if st.session_state.transcript_data:
     st.header("2. Choose Your Next Step")
-    st.write(f"Clients to process: {', '.join([item['client_name'] for item in st.session_state.transcript_data])}")
+    # st.write(f"Clients to process: {', '.join([item['client_name'] for item in st.session_state.transcript_data])}")
 
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Analyse Transcripts & Prioritize Clients"):
             with st.spinner("Analyzing transcripts..."):
-                st.session_state.analysis_results = analyse_transcripts(st.session_state.transcript_data)
+                st.session_state.analysis_results = agents.priority_results_generation(seller_id=st.session_state.user)
+                # st.session_state.analysis_results = analyse_transcripts(st.session_state.transcript_data)
             # Reset states for scheduling if analysis is re-run
             for key in ['suggested_schedule', 'show_auth_flow', 'auth_purpose', 'free_slots_data',
                         'auth_url', 'auth_flow_started', 'show_auth_flow_intended']:
