@@ -322,6 +322,22 @@ with st.form("transcript_upload_form", clear_on_submit=True):
                     valid_submission = False
                     break
 
+            ###
+            query_dict = {
+                "table": "customer",
+                "columns": ["customer_id", "customer_name"],
+                "where": {"associated_salesrep_id": st.session_state.user}
+            }
+
+            associated_customers = st.session_state.db.fetch_json(query_dict)
+            customers_list = associated_customers["customer_name"].tolist()
+            customers_list = [name.lower() for name in customers_list]
+
+            for data in processed_data:
+                if data['client_name'].lower().replace('_', ' ') not in customers_list:
+                    valid_submission = False
+                    st.warning(f"Error finding Assocated Customer: {data['client_name'].replace('_', ' ')}")
+
             if valid_submission:
                 st.session_state.transcript_data = processed_data
                 # Reset subsequent step states
@@ -402,7 +418,7 @@ if st.session_state.get('show_auth_flow', False):
                 backup_session_state_for_oauth()  # Save state before redirect
 
                 flow = get_google_oauth_flow()
-                authorization_url, _ = flow.authorization_url(access_type='offline', include_granted_scopes='true')
+                authorization_url, _ = flow.authorization_url(access_type='offline', include_granted_scopes='true', state=st.session_state.user)
 
                 st.session_state.auth_url = authorization_url
                 st.session_state.auth_flow_started = True
@@ -422,6 +438,7 @@ if st.session_state.get('show_auth_flow', False):
 
     elif current_credentials and current_credentials.valid:  # User is authenticated
         st.success("Successfully authenticated with Google Calendar.")
+        st.session_state.auth_purpose = 'schedule_meetings'
         if st.button("Sign Out from Google"):
             clear_all_auth_state()
             st.rerun()

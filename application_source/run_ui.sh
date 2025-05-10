@@ -1,1 +1,1 @@
-streamlit run ui/home_page.py --server.port 9999
+streamlit run ui/home_page.py --server.port 8501
