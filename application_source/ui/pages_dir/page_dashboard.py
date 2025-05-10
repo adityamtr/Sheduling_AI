@@ -90,7 +90,7 @@ def analyse_transcripts(transcript_data_list):
 
 def schedule_meetings(analysis_results, free_slots_by_day):
     # Simulates meeting scheduling based on priority and availability
-    st.info("Simulating meeting scheduling...")
+    # st.info("Simulating meeting scheduling...")
     suggestions = []
     priority_list = analysis_results.get('priority_order', [])
 
@@ -111,7 +111,7 @@ def schedule_meetings(analysis_results, free_slots_by_day):
         else:
             suggestions.append(
                 f"**{str(client_name)}** (Score: {client_score:.2f}): No more free slots available in the checked range.")
-    st.success("Meeting scheduling simulation complete.")
+    # st.success("Meeting scheduling simulation complete.")
     return suggestions if suggestions else ["No suitable meeting slots or clients to schedule."]
 
 
@@ -222,7 +222,7 @@ def fetch_calendar_free_slots(credentials):
             slots = get_free_slots(busy_today, day_start_local, day_end_local)
             if slots: free_slots_by_day[current_date.strftime('%Y-%m-%d')] = slots
 
-        st.success("Successfully fetched calendar slots.")
+        # st.success("Successfully fetched calendar slots.")
         return free_slots_by_day
     except HttpError as e:
         st.error(f"A Google Calendar API error occurred: {e}")
@@ -376,18 +376,19 @@ if st.session_state.transcript_data:
                         'auth_url', 'auth_flow_started', 'show_auth_flow_intended']:
                 st.session_state[key] = default_session_keys[key]
             st.rerun()
-    with col2:
-        if st.button("Suggest Meeting Times (Requires Calendar Access)"):
-            if not st.session_state.analysis_results:
-                st.warning("Please analyse transcripts first to determine client priority.")
-            else:
-                st.session_state.show_auth_flow = True  # Trigger display of Section 4
-                st.session_state.suggested_schedule = None  # Clear any old schedule
-                st.session_state.free_slots_data = None  # Clear old slots
-                st.rerun()
+    # with col2:
+    #     if st.button("Suggest Meeting Times (Requires Calendar Access)"):
+    #         if not st.session_state.analysis_results:
+    #             st.warning("Please analyse transcripts first to determine client priority.")
+    #         else:
+    #             st.session_state.show_auth_flow = True  # Trigger display of Section 4
+    #             st.session_state.suggested_schedule = None  # Clear any old schedule
+    #             st.session_state.free_slots_data = None  # Clear old slots
+    #             st.rerun()
 
 # Section 3: Display Analysis Results
-if st.session_state.analysis_results and not st.session_state.get('show_auth_flow', False):
+# if st.session_state.analysis_results and not st.session_state.get('show_auth_flow', False):
+if st.session_state.analysis_results:
     st.header("3. Client Analysis & Priority")
     results = st.session_state.analysis_results
     priority_order = results.get('priority_order', [])
@@ -401,12 +402,30 @@ if st.session_state.analysis_results and not st.session_state.get('show_auth_flo
             st.markdown(f"**{i + 1}. {client_name}** (Conversion Score: {score})")
 
         st.subheader("Client Summaries:")
-        for client_name in priority_order:
+        # for client_name in priority_order:
+        #     client_data = results.get(client_name)
+        #     if client_data:  # Ensure client_data exists
+        #         with st.expander(f"Details for {client_name} (Score: {client_data.get('score', 'N/A')})"):
+        #             st.write(client_data.get('summary', "No summary available."))
+        tabs = st.tabs([f"{client_name} (Score: {results.get(client_name, {}).get('score', 'N/A')})"
+                        for client_name in priority_order if results.get(client_name)])
+
+        for i, client_name in enumerate(priority_order):
             client_data = results.get(client_name)
-            if client_data:  # Ensure client_data exists
-                with st.expander(f"Details for {client_name} (Score: {client_data.get('score', 'N/A')})"):
+            if client_data:
+                with tabs[i]:
+                    st.subheader(f"Details for {client_name}")
                     st.write(client_data.get('summary', "No summary available."))
-    st.markdown("---")
+
+        st.markdown("---")
+        if st.button("Suggest Meeting Times (Requires Calendar Access)"):
+            if not st.session_state.analysis_results:
+                st.warning("Please analyse transcripts first to determine client priority.")
+            else:
+                st.session_state.show_auth_flow = True  # Trigger display of Section 4
+                st.session_state.suggested_schedule = None  # Clear any old schedule
+                st.session_state.free_slots_data = None  # Clear old slots
+                st.rerun()
 
 # Section 4: Google Calendar Authentication & Scheduling Logic
 if st.session_state.get('show_auth_flow', False):
