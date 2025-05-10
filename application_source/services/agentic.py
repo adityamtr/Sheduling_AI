@@ -1,5 +1,8 @@
+import pandas as pd 
+
 from pydantic import BaseModel
-from typing import List, Literal
+from typing import List, Literal, Optional
+
 
 def strict_schema(schema):
     if not isinstance(schema, dict):
@@ -231,5 +234,145 @@ class AgentGenerateKPIs(ContextMethods):
         return prompt
 
 
+class CustomerDetails(BaseModel):
+    customer_id: int
+    customer_name: str
+    priority: int
+    priority_score: float
+    priority_reason: str
+    highlights_last_meeting: Optional[str] = None
+    next_meeting_agenda: Optional[str] = None
+    suggestions_next_meeting: Optional[str] = None
+
+class Agent_Generate_Priority_Reasoning(ContextMethods):
+
+    def __init__(self):
+        self.context = []
+        self.kpis_table = pd.read_csv("./data/demo_data/output/transcript_extracted_kpi_table.csv")
+        self.example  = [{
+            "customer_id": 101,
+            "customer_name": "John Doe",
+            "priority": 1,
+            "priority_score": 4.5,
+            "priority_reason": "High engagement and strong past sales performance",
+            "highlights_last_meeting": "Discussed pricing and expansion strategy",
+            "next_meeting_agenda": "Review latest KPIs and align on next-quarter strategy",
+            "suggestions_next_meeting": "Offer new promotional discounts based on buying trends"
+        }, 
+        {
+            "customer_id": 301,
+            "customer_name": "Jenny Fin",
+            "priority": 2,
+            "priority_score": 2.5,
+            "priority_reason": "Moderate engagement and medium past sales performance",
+            "highlights_last_meeting": "Discussed pricing and expansion strategy",
+            "next_meeting_agenda": "Review latest KPIs and align on next-quarter strategy",
+            "suggestions_next_meeting": "Offer new promotional discounts based on buying trends"
+        }]
+
+    def prompt_response_schema(self):
+        modelschema = ConversationAnalysis.model_json_schema()
+        schema = strict_schema(modelschema)
+        return False
+    
+    def prompt_func(self, customer, priority_dict = {}):
+        self.add_role(role="system", content=self.role_defination())
+        self.add_role(role="system", content=self.task_defination(priority_dict))
+        self.add_role(role="system", content=self.response_format(priority_dict))
+        self.add_role(role="user", content=self.user_input_defination(customer, priority_dict))
+
+        return self.build_context()
+    
+    def role_defination(self):
+        prompt = f"""You are an expert Content generator & analyser.
+        Your task is to analyse the contents/ details provided to you regarding various Customers of a Sales representative.
+        Once analysed, you need to generate a few content based on these details accordingly. 
+            """
+        return prompt
+    
+    def task_defination(self, priority_dict):
+        prompt = f"""For the Sales representative, you will be provided with the details of a few Customers. 
+    
+        Following are the details (KPIs) that each customer will have:
+
+            - Customer_id: ID of the Customer
+            - Customer_name: Name of the Customer. 
+            - summary: The call summary of the last phone call. 
+            - sentiment: The sentiment of the call.
+            - products_marketed_list: Names of the products marketed or discussed by Sales Representative during the meeting in Python list format. 
+            - products_interested_list: Names of products the Customer seems to be genuinely interested in Python list format. 
+
+        You will also be provided with the Customer proiority list and their respective priority scores. 
+
+        As per the priority list and the KPI details provided to you, You will generate the following pointers for each of the Customers and return them back in form of list of JSONs.
+        Each JSON element of the list will have the following fields:
+
+            -1. Customer_id: ID of the Customer
+            -2. Customer_name: Name of the Customer.
+            -2. Priority: The priority order
+            -3. Priority_score: The priority score
+            -4. Priority_reason: The detailed explaination providing the reason for the priority level and score for this customer based on the provided KPIs.
+            -5. Highlights_last_meeting: Highlighting the key pointers of the previous meeting.
+            -6. Next_meeting_agenda: Discuss about the agenda of the next meeting in details. 
+            -7. Suggestions_next_meeting: Suggestions for the next meeting based on the Customer KPIs.
+
+        Provide these details in form of a Python list only. No other text, or explaination is needed.
+        NOTE:
+        
+            -  The KPIs are the main reference pointers
+            -  Keep the Suggestions_next_meeting as a list of pointers. 
+
+        """
+    
+    def response_format(self):
+        prompt = f"""The response format should be in form of a Python list. 
+        The python list should comprise of the JSONs for each Customer. 
+        
+        Here is a Schema for an invidual Customer JSON: 
+        {CustomerDetails.model_json_schema()}
+
+        So if there are 3 customers for a Sales representative, the response schema would be like:
+        [{CustomerDetails.model_json_schema()}, {CustomerDetails.model_json_schema()}, {CustomerDetails.model_json_schema()}]
+
+        Here is an example to follow, if the number of customers is 2 for the sales representative:
+        {self.example}
+
+        NOTE:
+        1. The example is just for you to get an idea of the response format. 
+        2. Do NOT reply on the example for the data and facts.  only the KPIs are the main source of data. 
+        """
+        return prompt
+    
+    def extract_format_data(self, customer, priority_dict):
+        customer_df = self.kpis_table[self.kpis_table["sales_rep_id"] == customer]
+        client_list_dfs = [customer_df[customer_df["client_id"] == key] for key in priority_dict]
+        
+        client_list_dfs = self.extract_data(client_list_dfs)
+        kpi_strings = ""
+        for client_df in client_list_dfs:
+            client_df = client_df.sort_values(by="timestamp", ascending = False).head(2)
+            client_df = client_df.drop(["transcript"], asis = 1)
+
+
+    
+    def user_input_defination(self, customer, priority_dict):
+
+
+        prompt = f"""
+        Here are the details of the KPIs for the customer and the client:
+        Customer ID: {customer}
+
+
+        {}
+        """
+
+        return prompt
+
+
+        
+
+
+
+         
 
     
