@@ -16,6 +16,7 @@ from googleapiclient.errors import HttpError
 
 from services.db_controller import DBController
 from services.agent_controller import Agent_Controller
+from config.config import config
 
 # --- Configuration ---
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
@@ -26,7 +27,7 @@ REDIRECT_URI = 'http://localhost:8501/'  # Must match Google Cloud Console confi
 
 WORKING_HOUR_START = 9
 WORKING_HOUR_END = 17
-NUM_DAYS_TO_CHECK = 14
+NUM_DAYS_TO_CHECK = 20
 
 controller = DBController()
 agents = Agent_Controller()
@@ -67,7 +68,7 @@ def restore_session_state_after_oauth():
 # --- Placeholder Backend Functions ---
 def analyse_transcripts(transcript_data_list):
     # Simulates backend transcript analysis
-    st.info("Simulating transcript analysis...")
+    st.toast("Simulating transcript analysis...")
     results = {}
     scores = {}
     for item in transcript_data_list:
@@ -84,13 +85,13 @@ def analyse_transcripts(transcript_data_list):
         results[client_name] = {'summary': summary, 'score': round(score, 2)}
         scores[client_name] = score
     results['priority_order'] = sorted(scores, key=scores.get, reverse=True)
-    st.success("Transcript analysis complete.")
+    st.toast("Transcript analysis complete.")
     return results
 
 
 def schedule_meetings(analysis_results, free_slots_by_day):
     # Simulates meeting scheduling based on priority and availability
-    # st.info("Simulating meeting scheduling...")
+    # st.toast("Simulating meeting scheduling...")
     suggestions = []
     priority_list = analysis_results.get('priority_order', [])
 
@@ -111,8 +112,31 @@ def schedule_meetings(analysis_results, free_slots_by_day):
         else:
             suggestions.append(
                 f"**{str(client_name)}** (Score: {client_score:.2f}): No more free slots available in the checked range.")
-    # st.success("Meeting scheduling simulation complete.")
-    return suggestions if suggestions else ["No suitable meeting slots or clients to schedule."]
+    # st.toast("Meeting scheduling simulation complete.")
+    return suggestions if suggestions else ["No suitable meeting slots or Customers to schedule."]
+
+def llm_schedule_meetings(analysis_results, free_slots_by_day, user_instructions):
+    # Simulates meeting scheduling based on priority and availability
+    # st.toast("Simulating meeting scheduling...")
+    suggestions = []
+    priority_list = analysis_results.get('priority_order', [])
+
+    flat_slots = []
+    for date_str in sorted(free_slots_by_day.keys()):
+        for slot in free_slots_by_day[date_str]:
+            flat_slots.append({'date': str(date_str),
+                               'time': str(slot.split(' - ')[0]),
+                               'slot_str': str(slot)})
+    slot_idx = 0
+    priority_data = {}
+    for client_name in priority_list:
+        client_score = analysis_results.get(client_name, {}).get('score', 0)
+        priority_data[client_name] = {'score': round(client_score, 2)}
+
+    suggestions = agents.get_optimal_meeting_slots(priority_data=priority_data, slots_data=free_slots_by_day, instructions=user_instructions)
+
+    st.toast("Meeting scheduling simulation complete.")
+    return suggestions if suggestions else ["No suitable meeting slots or Customers to schedule."]
 
 
 # --- Authentication & Calendar Utilities ---
@@ -159,7 +183,7 @@ def get_free_slots(busy_intervals, day_start_local, day_end_local):
 
 
 def fetch_calendar_free_slots(credentials):
-    st.info("Fetching Google Calendar free slots...")
+    st.toast("Fetching Google Calendar free slots...")
     free_slots_by_day = {}
     try:
         service = build('calendar', 'v3', credentials=credentials)
@@ -222,7 +246,7 @@ def fetch_calendar_free_slots(credentials):
             slots = get_free_slots(busy_today, day_start_local, day_end_local)
             if slots: free_slots_by_day[current_date.strftime('%Y-%m-%d')] = slots
 
-        # st.success("Successfully fetched calendar slots.")
+        # st.toast("Successfully fetched calendar slots.")
         return free_slots_by_day
     except HttpError as e:
         st.error(f"A Google Calendar API error occurred: {e}")
@@ -235,7 +259,7 @@ def fetch_calendar_free_slots(credentials):
 
 # --- Streamlit App UI and Logic ---
 # st.set_page_config(layout="wide")
-st.title("AI Client Scheduler Assistant")
+st.title("AI Customer Scheduler Assistant")
 
 # Initialize all session state keys to avoid KeyErrors
 default_session_keys = {
@@ -262,7 +286,7 @@ if auth_code:
 
     # Proceed with token exchange if auth flow was started (live or restored)
     if st.session_state.get('auth_flow_started') or st.session_state.get('show_auth_flow_intended'):
-        st.info("Processing Google authentication...")
+        st.toast("Processing Google authentication...")
         try:
             flow = get_google_oauth_flow()
             code_to_use = auth_code[0] if isinstance(auth_code, list) else auth_code
@@ -273,7 +297,7 @@ if auth_code:
             st.session_state.show_auth_flow_intended = False
             st.session_state.auth_url = None
 
-            st.success("✅ Google Authentication successful!")
+            st.toast("✅ Google Authentication successful!")
             st.query_params.clear()
 
             # Restore intent for scheduling
@@ -292,7 +316,7 @@ if auth_code:
 
 # Section 1: Transcript Upload
 st.header("1. Upload Meeting Transcripts")
-st.markdown("Client names are derived from filenames (e.g., `ClientX_Meeting.txt` → `ClientX_Meeting`). "
+st.markdown("Customer names are derived from filenames (e.g., `firstname_lastname.txt` → `firstname_lastname`). "
             "Filenames must use only letters, numbers, and underscores.")
 
 with st.form("transcript_upload_form", clear_on_submit=True):
@@ -315,7 +339,7 @@ with st.form("transcript_upload_form", clear_on_submit=True):
                     break
                 if client_name_base in seen_client_names:
                     st.error(
-                        f"Duplicate client name '{client_name_base}' derived from filenames. Please ensure unique base names.")
+                        f"Duplicate Customer name '{client_name_base}' derived from filenames. Please ensure unique base names.")
                     valid_submission = False
                     break
                 seen_client_names.add(client_name_base)
@@ -357,7 +381,7 @@ with st.form("transcript_upload_form", clear_on_submit=True):
                 for key in ['analysis_results', 'suggested_schedule', 'free_slots_data', 'show_auth_flow',
                             'auth_purpose', 'auth_url', 'auth_flow_started', 'show_auth_flow_intended']:
                     st.session_state[key] = default_session_keys[key]
-                st.success(f"{len(processed_data)} transcripts processed successfully.")
+                st.toast(f"{len(processed_data)} transcripts processed successfully.")
                 st.rerun()
 
 # Section 2: Actions after transcript upload
@@ -368,7 +392,7 @@ if st.session_state.kpis_present:
 
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("Analyse Transcripts & Prioritize Clients"):
+        if st.button("Analyse Transcripts & Prioritize Customers"):
             with st.spinner("Analyzing transcripts..."):
                 st.session_state.analysis_results = agents.priority_results_generation(seller_id=st.session_state.user)
                 # st.session_state.analysis_results = analyse_transcripts(st.session_state.transcript_data)
@@ -380,7 +404,7 @@ if st.session_state.kpis_present:
     # with col2:
     #     if st.button("Suggest Meeting Times (Requires Calendar Access)"):
     #         if not st.session_state.analysis_results:
-    #             st.warning("Please analyse transcripts first to determine client priority.")
+    #             st.warning("Please analyse transcripts first to determine Customer priority.")
     #         else:
     #             st.session_state.show_auth_flow = True  # Trigger display of Section 4
     #             st.session_state.suggested_schedule = None  # Clear any old schedule
@@ -390,19 +414,19 @@ if st.session_state.kpis_present:
 # Section 3: Display Analysis Results
 # if st.session_state.analysis_results and not st.session_state.get('show_auth_flow', False):
 if st.session_state.analysis_results:
-    st.header("3. Client Analysis & Priority")
+    st.header(f"3. Customer Analysis & Priority [ Top {config.get("optimization", "visits_threshold")} Customers ]")
     results = st.session_state.analysis_results
     priority_order = results.get('priority_order', [])
 
     if not priority_order:
-        st.warning("Analysis complete, but no clients were prioritized or scored.")
+        st.warning("Analysis complete, but no Customers were prioritized or scored.")
     else:
-        st.subheader("Client Priority Order (Highest First):")
+        st.subheader("Customer Priority Order (Highest First):")
         for i, client_name in enumerate(priority_order):
             score = results.get(client_name, {}).get('score', 'N/A')
-            st.markdown(f"**{i + 1}. {client_name}** (Conversion Score: {score})")
+            st.markdown(f"**{i + 1}. {client_name}** (Priority Score: {score})")
 
-        st.subheader("Client Summaries:")
+        st.subheader("Customer Summaries:")
         # for client_name in priority_order:
         #     client_data = results.get(client_name)
         #     if client_data:  # Ensure client_data exists
@@ -419,13 +443,15 @@ if st.session_state.analysis_results:
                     st.write(client_data.get('summary', "No summary available."))
 
         st.markdown("---")
+        user_instructions = st.text_input("Enter customised instructions (optional):")
         if st.button("Suggest Meeting Times (Requires Calendar Access)"):
             if not st.session_state.analysis_results:
-                st.warning("Please analyse transcripts first to determine client priority.")
+                st.warning("Please analyse transcripts first to determine Customer priority.")
             else:
                 st.session_state.show_auth_flow = True  # Trigger display of Section 4
                 st.session_state.suggested_schedule = None  # Clear any old schedule
                 st.session_state.free_slots_data = None  # Clear old slots
+                st.session_state.user_instructions = user_instructions
                 st.rerun()
 
 # Section 4: Google Calendar Authentication & Scheduling Logic
@@ -435,11 +461,11 @@ if st.session_state.get('show_auth_flow', False):
 
     if not (current_credentials and current_credentials.valid):
         if current_credentials and current_credentials.expired and current_credentials.refresh_token:
-            st.info("Google token expired. Attempting to refresh...")
+            st.toast("Google token expired. Attempting to refresh...")
             try:
                 current_credentials.refresh(Request())
                 save_credentials(current_credentials)
-                st.success("Token refreshed successfully.")
+                st.toast("Token refreshed successfully.")
                 st.rerun()
             except Exception as e:
                 st.error(f"Token refresh failed: {e}. Please sign in again.")
@@ -471,7 +497,7 @@ if st.session_state.get('show_auth_flow', False):
                 st.markdown("---")
 
     elif current_credentials and current_credentials.valid:  # User is authenticated
-        st.success("Successfully authenticated with Google Calendar.")
+        st.toast("Successfully authenticated with Google Calendar.")
         st.session_state.auth_purpose = 'schedule_meetings'
         if st.button("Sign Out from Google"):
             clear_all_auth_state()
@@ -484,10 +510,12 @@ if st.session_state.get('show_auth_flow', False):
                     st.session_state.free_slots_data = fetch_calendar_free_slots(current_credentials)
 
             fetched_slots = st.session_state.free_slots_data
+            user_instructions = st.session_state.user_instructions
             if fetched_slots is not None:  # Check if fetch was successful (not None)
                 if st.session_state.suggested_schedule is None:  # Generate schedule only once
-                    with st.spinner("Matching clients to your availability..."):
-                        st.session_state.suggested_schedule = schedule_meetings(analysis_data, fetched_slots)
+                    with st.spinner("Matching Customers to your availability..."):
+                        # st.session_state.suggested_schedule = schedule_meetings(analysis_data, fetched_slots)
+                        st.session_state.suggested_schedule = llm_schedule_meetings(analysis_data, fetched_slots, user_instructions)
 
                 current_schedule = st.session_state.suggested_schedule
                 if current_schedule:
@@ -498,11 +526,11 @@ if st.session_state.get('show_auth_flow', False):
                     st.warning("No free slots were found in your calendar for the upcoming period.")
                 else:  # Slots fetched, but schedule is still None (e.g., no clients from analysis)
                     st.info(
-                        "Slots found, but no specific schedule generated (e.g., no high-priority clients or other criteria not met).")
+                        "Slots found, but no specific schedule generated (e.g., no high-priority Customers or other criteria not met).")
             else:  # free_slots_data is None (meaning fetch_calendar_free_slots returned None due to an error)
                 st.error("Could not retrieve calendar data. Please ensure Google Calendar access is working.")
         elif not analysis_data:
             st.warning("Analysis results are not available. Please go back and analyze transcripts first.")
     st.markdown("---")
 
-st.caption(f"AI Client Scheduler Assistant v0.1")
+st.caption(f"AI Customer Scheduler Assistant v0.1")

@@ -18,6 +18,9 @@ if "user_name" not in st.session_state:
 if "kpis_present" not in st.session_state:
     st.session_state.kpis_present = False
 
+if "user_instructions" not in st.session_state:
+    st.session_state.user_instructions = None
+
 params = st.query_params
 
 # If user is redirected back from Google OAuth
