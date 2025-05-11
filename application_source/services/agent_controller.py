@@ -1,5 +1,9 @@
 from services.dialog_service import Agent_Orchestrator
-from services.agentic import Agent_Generate_Summary, AgentGenerateKPIs, Agent_Generate_Priority_Reasoning, Agent_Formatter
+from services.agentic import (Agent_Generate_Summary,
+                              AgentGenerateKPIs,
+                              Agent_Generate_Priority_Reasoning,
+                              Agent_Formatter,
+                              Agent_Scheduler)
 from services.db_controller import DBController
 from optimization_algorithm.run_priority_model_v2 import PriorityModel
 from services.singlton_arc import SingletonMeta
@@ -7,6 +11,7 @@ import pandas as pd
 from pathlib import Path
 import json
 import ast
+from datetime import datetime
 
 
 class Agent_Controller(metaclass=SingletonMeta):
@@ -123,3 +128,37 @@ class Agent_Controller(metaclass=SingletonMeta):
 
         return analysis
 
+    def get_optimal_meeting_slots(self, priority_data, slots_data, instructions=None):
+
+        today_str = datetime.today().strftime('%Y-%m-%d')
+        dates = list(slots_data.keys())
+        date_day_mapping = {date: datetime.strptime(date, "%Y-%m-%d").strftime("%A") for date in dates}
+
+        query = f"""
+        Today's date: {today_str}
+        
+        Slot Dates to Days map: {str(date_day_mapping)}
+        
+        Here is Customer Priority data:
+        {priority_data}
+        
+        Here are available slots from seller's calender:
+        {slots_data}
+        
+        """
+
+        if instructions:
+            query += f"""
+            Here are user customised instructions:
+            {instructions}
+            """
+        orchestrator = Agent_Orchestrator(prompt_func=Agent_Scheduler().prompt_func,
+                                          is_json_response=Agent_Scheduler().prompt_response_schema())
+        res = orchestrator.run(query)
+        slots = []
+        try:
+            slots = json.loads(res)
+        except:
+            slots = ast.literal_eval(res)
+
+        return slots
