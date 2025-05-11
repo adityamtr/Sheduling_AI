@@ -259,7 +259,7 @@ def fetch_calendar_free_slots(credentials):
 
 # --- Streamlit App UI and Logic ---
 # st.set_page_config(layout="wide")
-st.title("AI Customer Scheduler Assistant")
+st.title("Meet-Minder")
 
 # Initialize all session state keys to avoid KeyErrors
 default_session_keys = {
@@ -443,7 +443,9 @@ if st.session_state.analysis_results:
                     st.write(client_data.get('summary', "No summary available."))
 
         st.markdown("---")
-        user_instructions = st.text_input("Enter customised instructions (optional):")
+        st.header("4. Suggest Meeting Schedule via Google Calendar")
+        instructions_placeholder, _ = st.columns([6, 4])
+        user_instructions = instructions_placeholder.text_area("Enter customised instructions (optional):")
         if st.button("Suggest Meeting Times (Requires Calendar Access)"):
             if not st.session_state.analysis_results:
                 st.warning("Please analyse transcripts first to determine Customer priority.")
@@ -456,7 +458,6 @@ if st.session_state.analysis_results:
 
 # Section 4: Google Calendar Authentication & Scheduling Logic
 if st.session_state.get('show_auth_flow', False):
-    st.header("4. Suggest Meeting Schedule via Google Calendar")
     current_credentials = st.session_state.credentials
 
     if not (current_credentials and current_credentials.valid):
@@ -497,7 +498,7 @@ if st.session_state.get('show_auth_flow', False):
                 st.markdown("---")
 
     elif current_credentials and current_credentials.valid:  # User is authenticated
-        st.toast("Successfully authenticated with Google Calendar.")
+        # st.toast("Successfully authenticated with Google Calendar.")
         st.session_state.auth_purpose = 'schedule_meetings'
         if st.button("Sign Out from Google"):
             clear_all_auth_state()
@@ -533,4 +534,4 @@ if st.session_state.get('show_auth_flow', False):
             st.warning("Analysis results are not available. Please go back and analyze transcripts first.")
     st.markdown("---")
 
-st.caption(f"AI Customer Scheduler Assistant v0.1")
+st.caption(f"Meet-Minder v0.1")

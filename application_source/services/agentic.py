@@ -452,7 +452,7 @@ class Agent_Scheduler(ContextMethods):
         - Identify max Date Range.
         - Determine Optimal time slots to meet with each customer and generate schedule list.
         - The format for each element in schedule list should look like:
-            **<client name here>** (Score: <client score here>): Suggest on **<meeting date here>** at Slot -> <start time here> to <end time here>
+            **<client name here>** (Score: <client score here>): Suggest on **<meeting date here>** (<day of the week here>) at Slot -> <start time here> to <end time here>
             like this generate list of elements where each elements is string of meeting slots details in above format.
         - While generating slot details, consider following default instructions:
             1. Schedule max 2 meeting in a day, one can be in morning and one can be in afternoon.
