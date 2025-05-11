@@ -28,6 +28,8 @@ if "code" in params and "state" in params:
     st.session_state.user = params["state"]
     st.session_state.logged_in = True
     st.session_state.kpis_present = True
+    seller_name = controller.get_seller_name(st.session_state.user)
+    st.session_state.user_name = seller_name
 
 def login():
     # st.title("🔐 Login")
@@ -46,6 +48,8 @@ def login():
             if validation:
                 st.session_state.logged_in = True
                 st.session_state.user = userid
+                seller_name = controller.get_seller_name(userid)
+                st.session_state.user_name = seller_name
                 st.session_state.kpis_present = bool(customer_records)
                 st.success("Login successful! Redirecting to dashboard...")
                 time.sleep(1)

@@ -258,8 +258,12 @@ def fetch_calendar_free_slots(credentials):
 
 
 # --- Streamlit App UI and Logic ---
-# st.set_page_config(layout="wide")
-st.title("Meet-Minder")
+# st.set_page_config(layout=
+_, greetings_placeholder = st.columns([8,2])
+greetings_placeholder.markdown(f"Welcome {st.session_state.user_name}!")
+st.title("MeetMinder")
+st.subheader("Intelligent Scheduling Agent for Sales Teams")
+st.markdown('---')
 
 # Initialize all session state keys to avoid KeyErrors
 default_session_keys = {
@@ -387,12 +391,12 @@ with st.form("transcript_upload_form", clear_on_submit=True):
 # Section 2: Actions after transcript upload
 # if st.session_state.transcript_data:
 if st.session_state.kpis_present:
-    st.header("2. Choose Your Next Step")
+    st.header("2. Analyse Transcripts & Prioritize Customers")
     # st.write(f"Clients to process: {', '.join([item['client_name'] for item in st.session_state.transcript_data])}")
 
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("Analyse Transcripts & Prioritize Customers"):
+        if st.button("Start Analysis"):
             with st.spinner("Analyzing transcripts..."):
                 st.session_state.analysis_results = agents.priority_results_generation(seller_id=st.session_state.user)
                 # st.session_state.analysis_results = analyse_transcripts(st.session_state.transcript_data)
@@ -534,4 +538,4 @@ if st.session_state.get('show_auth_flow', False):
             st.warning("Analysis results are not available. Please go back and analyze transcripts first.")
     st.markdown("---")
 
-st.caption(f"Meet-Minder v0.1")
+st.caption(f"MeetMinder v0.1")
