@@ -137,7 +137,16 @@ class PriorityModel(metaclass=SingletonMeta):
         top_priority = (
             df.sort_values(["associated_salesrep_id", "priority_score"], ascending=[True, False])
             .groupby("associated_salesrep_id")
-            .head(top_n)[["associated_salesrep_id", "customer_id", "customer_name", "priority_score"]]
+            .head(top_n)[["associated_salesrep_id",
+                           "customer_id",
+                            "customer_name",
+                            "priority_score",
+                            'days_since_last_meeting',
+                            'days_since_last_purchase',
+                            'avg_annual_sales',
+                            'purchase_freq_per_qtr',
+                            'sentiment_score',
+                             ]]
         )
         return top_priority
 
@@ -170,10 +179,21 @@ class PriorityModel(metaclass=SingletonMeta):
         priority_df, ls = self.get_priority_order(priority_df, salesrep_id_param)
 
         analysis = {}
+        analysis_expanded = {}
         for i, row in priority_df.iterrows():
             analysis[row['customer_name']] = {'summary': "",
                                               'score': round(row['priority_score']*100, 2),
                                               'customer_id': row['customer_id']}
+            
+            analysis_expanded[row['customer_name']] = {'summary': "",
+                                              'score': round(row['priority_score']*100, 2),
+                                              'customer_id': row['customer_id'],
+                                              'days_since_last_meeting': row['days_since_last_meeting'],
+                                              'days_since_last_purchase': row['days_since_last_purchase'],
+                                              'avg_annual_sales': row['avg_annual_sales'],
+                                              'purchase_freq_per_qtr': row['purchase_freq_per_qtr'],
+                                              'sentiment_score': row['sentiment_score']}
 
         analysis['priority_order'] = ls
-        return analysis
+        analysis_expanded['priority_order'] = ls
+        return analysis, analysis_expanded
