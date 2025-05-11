@@ -61,6 +61,7 @@ streamlit run ui/home_page.py --server.port 8501
 
 > After running the command, a local URL (usually `http://localhost:8501`) will be generated. You can open this in your web browser to access the application UI.
 
+> ⚠️ **Note**: If you are running streamlit for first time in new environment, you might be prompted to enter email id. This can be skipped by pressing [Enter] key.
 ---
 
 ## 🧑‍💻 Usage Instructions
@@ -78,7 +79,7 @@ streamlit run ui/home_page.py --server.port 8501
      - Upload a transcript manually.
      - Dummy transcripts can be found in folder `data/demo_data/test`
      - Proceed with analysis using existing data from the database.
-
+     - The analysis results will be shown for top 3 customers (no matter how many transcripts are uploaded)
    > ⚠️ **Note**: The analysis option will only be available if transcripts exist for the user in the database. New users won’t see this option.
 
 3. **Post Analysis Flow**

@@ -407,6 +407,68 @@ class Agent_Formatter(ContextMethods):
         return prompt
 
 
+class Agent_Scheduler(ContextMethods):
+
+    def __init__(self):
+        self.context = []
+
+    def prompt_response_schema(self):
+        return False
+
+    def prompt_func(self, user_input=None):
+        self.add_role(role="system", content=self.role_defination())
+        self.add_role(role="system", content=self.task_defination())
+        self.add_role(role="user", content=self.user_input_defination(user_input))
+
+        return self.build_context()
+
+    def role_defination(self):
+        prompt = f"""
+        You are expert calender scheduler. 
+        You task is to analyse a whole given priority information of customers.
+        And generate meeting schedules for given date range.
+        """
+
+        return prompt
+
+    def task_defination(self):
+        prompt = f"""
+
+        You Task is:
+
+        - Analyse given priority data.
+        - Analyse given free slots available from sellers calender.
+        - Identify max Date Range.
+        - Determine Optimal time slots to meet with each customer and generate schedule list.
+        - The format for each element in schedule list should look like:
+            **<client name here>** (Score: <client score here>): Suggest on **<meeting date here>** at Slot -> <start time here> to <end time here>
+            like this generate list of elements where each elements is string of meeting slots details in above format.
+        - While generating slot details, consider following default instructions:
+            1. Schedule max 2 meeting in a day, one can be in morning and one can be in afternoon.
+            2. Do note that seller might need to travel or need time to eat from one place to another so dont schedule consecutive meetings. keep at least one hour gaps.
+            3. Avoid weekends (saturday and sunday) and holidays while scheduling.
+            4. One meeting should be 1 hour long
+        - User can provide his own custom instructions, so follow those as well.
+
+        Important Notes:
+
+        - Return only generated python list of slot details, nothing else is required
+        - Also, if user has provided his instructions then give priority to those instructions over default instructions if there any conflicts between default and user provided instructions.
+        - One Customer will be given only one meeting slot
+        """
+
+        return prompt
+
+    def user_input_defination(self, data):
+        prompt = f"""
+        Here is input from user:
+
+        {data}
+        """
+
+        return prompt
+
+
         
 
 
