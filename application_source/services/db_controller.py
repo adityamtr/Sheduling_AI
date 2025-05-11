@@ -32,6 +32,17 @@ class DBController(metaclass=SingletonMeta):
             return True, n_kpis
         return False, n_kpis
 
+    def get_seller_name(self, seller_id):
+        query_dict = {
+            "table": "salesrep",
+            "columns": ["salesrep_id", "first_name", "last_name"],
+            "where": {"salesrep_id": seller_id}
+        }
+        df = self.db.fetch_json(query_dict)
+        df = df.drop_duplicates()
+        name = f"{df.iloc[0]['first_name']} {df.iloc[0]['last_name']}"
+        return name
+
     def get_customers_list(self, seller_id):
         customers_list = []
         query_dict = {
