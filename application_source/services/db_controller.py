@@ -20,9 +20,17 @@ class DBController(metaclass=SingletonMeta):
         df = self.db.fetch_json(query_dict)
         df = df.drop_duplicates()
 
+        query_dict = {
+            "table": "kpi",
+            "columns": ["salesrep_id"],
+            "where": {"salesrep_id": seller_id}
+        }
+        df2 = self.db.fetch_json(query_dict)
+        n_kpis = len(df2)
+
         if len(df) > 0 and df.iloc[0]['salesrep_id'] == seller_id:
-            return True
-        return False
+            return True, n_kpis
+        return False, n_kpis
 
     def get_customers_list(self, seller_id):
         customers_list = []

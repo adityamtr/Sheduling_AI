@@ -361,7 +361,8 @@ with st.form("transcript_upload_form", clear_on_submit=True):
                 st.rerun()
 
 # Section 2: Actions after transcript upload
-if st.session_state.transcript_data:
+# if st.session_state.transcript_data:
+if st.session_state.kpis_present:
     st.header("2. Choose Your Next Step")
     # st.write(f"Clients to process: {', '.join([item['client_name'] for item in st.session_state.transcript_data])}")
 

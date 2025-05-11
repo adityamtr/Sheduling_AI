@@ -15,12 +15,16 @@ if "user" not in st.session_state:
 if "user_name" not in st.session_state:
     st.session_state.user_name = ""
 
+if "kpis_present" not in st.session_state:
+    st.session_state.kpis_present = False
+
 params = st.query_params
 
 # If user is redirected back from Google OAuth
 if "code" in params and "state" in params:
     st.session_state.user = params["state"]
     st.session_state.logged_in = True
+    st.session_state.kpis_present = True
 
 def login():
     # st.title("🔐 Login")
@@ -35,10 +39,11 @@ def login():
         password = st.text_input("Password :", type="password")
 
         if button_col[int(divs/2)].button("Login"):
-            validation = controller.validate_seller(userid)
+            validation, customer_records = controller.validate_seller(userid)
             if validation:
                 st.session_state.logged_in = True
                 st.session_state.user = userid
+                st.session_state.kpis_present = bool(customer_records)
                 st.success("Login successful! Redirecting to dashboard...")
                 time.sleep(1)
                 st.rerun()  # Refresh to trigger navigation
