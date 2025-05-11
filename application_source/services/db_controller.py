@@ -80,6 +80,7 @@ class DBController(metaclass=SingletonMeta):
 
             now = datetime.now()
             formatted_time = now.strftime("%d-%m-%Y %H:%M")
+            formatted_Date = now.strftime("%d-%m-%Y")
 
             customer_id = customer_data.iloc[0]["customer_id"]
             record_dict = {"customer_id": customer_id,
@@ -98,6 +99,7 @@ class DBController(metaclass=SingletonMeta):
             record_dict.update(kpis)
 
             self.db.insert(table="kpi", data_dict=record_dict)
+            self.db.update('customer', {"last_meeting_date": formatted_Date}, 'customer_id = ?', [customer_id])
 
     def get_optimization_requirements(self):
 

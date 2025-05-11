@@ -292,8 +292,13 @@ class Agent_Generate_Priority_Reasoning(ContextMethods):
         Following are the details (KPIs) that each customer will have:
 
             - Customer_name: Name of the Customer. 
-            - priority: Priority of the Customer according to custom Model ,
-            - priority_score : Priority Score of the Customer according to custom Model,
+            - priority: Priority of the Customer according to custom Model.
+            - priority_score : Priority Score of the Customer according to custom Model.
+            - days_since_last_meeting: Days since the last meeting.
+            - days_since_last_purchase: Days since the last purchase.
+            - avg_annual_sales: Average Annual Sales.
+            - purchase_freq_per_qtr: Purchase per frequency.
+            - sentiment_score: The Sentiment score.
             - summary: The call summary of the conversation. 
             - sentiment: The sentiment of the conversation.
             - products_marketed_list: Names of the products marketed or discussed by Sales Representative during the meeting in Python list format. 
@@ -302,9 +307,15 @@ class Agent_Generate_Priority_Reasoning(ContextMethods):
         You will also be provided with the Customer priority list and their respective priority scores. 
 
         As per the priority list and the KPI details provided to you, You will generate the following pointers for each of the Customers and return them back in form of list of JSONs.
+        
         Each JSON element of the list will have the following fields:
 
-            -1. Priority_reason: The detailed explanation providing the reason for the priority level and score for this customer based on the provided KPIs.
+            -1. Priority_reason: The following are some key pointers for Priority Reasoning:
+                                 -> The detailed explaination providing the reason for the priority level and score for this customer based on the provided KPIs. 
+                                 -> The KPIS are sufficient enough to give a highlight on the priority score. Create the explaination with your proper reasoning. 
+                                 -> Do not just completely reply on the prirority score. Map your reasoning with the KPIs as well.
+                                 -> The priority scores are set using the KPIs only so they provide valuable insights to priority reasoning. 
+                                 -> Explain in 2-3 liners minimum. 
             -2. Highlights_last_meeting: Highlighting the key pointers of the previous meeting.
             -3. Next_meeting_agenda: Discuss about the agenda of the next meeting in details. 
             -4. Suggestions_next_meeting: Suggestions for the next meeting based on the Customer KPIs.
@@ -382,16 +393,16 @@ class Agent_Formatter(ContextMethods):
         You Task is:
 
         - Analyse given pointers and generated formatted output
+        - Mainly Split the content across 3 Specific Sections:
+            -> 1. Priority Assesment: This will have a 2-3 lines of the detailed explaination. 
+            -> 2. Previous Meeting Highlights: The content here must be divided into 3-4 bullet points. 
+            -> 3. Agenda for Next Meeting: The content here must be divided into 3-4 bullet points. 
+        - Make them as proper heading markdowns. 
         - Generate proper explanations of points given, like complete sentences.
         - Generate response like a proper guided conversation, which sounds like human is talking.
-        - Identify headings and labels and sections from given user input
-        - Generate brief explanation that includes
-            1. Proper markdown format of headings and labels
-            2. Primary points discussed
-
+ 
         Important Notes:
-
-        - Return only generated summary, nothing else is required
+        - Return only generated summary with these 3 primary sections as discussed. Nothing else is required.
 
         """
 
