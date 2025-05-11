@@ -63,13 +63,13 @@ class Agent_Controller(metaclass=SingletonMeta):
 
     def priority_results_generation(self, seller_id):
 
-        analysis = self.model.run(seller_id)
+        analysis, analysis_expanded = self.model.run(seller_id)
 
         query = ""
 
-        priority_order = analysis['priority_order']
+        priority_order = analysis_expanded['priority_order']
 
-        for name, data in analysis.items():
+        for name, data in analysis_expanded.items():
             if name != "priority_order":
                 customer_name = name
                 priority = priority_order.index(customer_name) + 1
@@ -82,6 +82,11 @@ class Agent_Controller(metaclass=SingletonMeta):
                 customer_name: {customer_name}
                 priority: {priority}
                 priority_score : {score}
+                days_since_last_meeting: {data['days_since_last_meeting']}
+                days_since_last_purchase: {data['days_since_last_purchase']}
+                avg_annual_sales: {data['avg_annual_sales']}
+                purchase_freq_per_qtr: {data['purchase_freq_per_qtr']}
+                sentiment_score: {data['sentiment_score']}
                 
                 """
 
