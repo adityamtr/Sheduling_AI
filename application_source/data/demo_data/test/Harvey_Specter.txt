@@ -1,0 +1,41 @@
+** Jim Halpert **: Good morning, Mr. Specter. It’s great to meet you in person. How has your current paper supply been holding up?
+
+** Harvey Specter **: Morning, Jim. We’re running low on some supplies, especially ProductD, the Cardstock Paper. I wanted to see if there are any ongoing offers or new options.
+
+** Jim Halpert **: Absolutely, Mr. Specter. ProductD, our Cardstock Paper, has been quite popular lately. Currently, it’s part of a limited-time 10% discount campaign, which I think could be beneficial for your needs.
+
+** Harvey Specter **: That sounds interesting. Last quarter, we faced some delays in delivery for our orders. How has that been addressed?
+
+** Jim Halpert **: I understand your concern, Mr. Specter. We’ve recently implemented new quality checks and improved our logistics to ensure timely deliveries. I can assure you that future orders of ProductD will be more reliable.
+
+** Harvey Specter **: Good to hear. Also, I need to ensure that ProductD is compatible with our printers. Do you have samples available for testing?
+
+** Jim Halpert **: Yes, we can certainly arrange for samples of ProductD. Would you like me to send some over for your team to evaluate?
+
+** Harvey Specter **: That would be helpful. Also, what’s the minimum order quantity if we decide to go for bulk pricing on ProductD?
+
+** Jim Halpert **: For bulk orders of ProductD, the minimum is 500 sheets. We offer competitive pricing for larger quantities, and I can send you an updated pricing sheet with all the details.
+
+** Harvey Specter **: Perfect. Besides ProductD, are there other products you recommend? We might consider some alternatives for different projects.
+
+** Jim Halpert **: Certainly. If you’re interested, we have ProductA, our Glossy Paper, which is excellent for high-quality presentations. Also, ProductB, our Matte Paper, offers a smooth finish suitable for reports. And for eco-friendly options, ProductC, Recycled Paper, might be a good fit.
+
+** Harvey Specter **: I see. How do these products compare in terms of delivery times and pricing?
+
+** Jim Halpert **: All our products, including ProductA, ProductB, and ProductC, are available for quick delivery—typically within 3 to 5 business days. Pricing varies depending on the quantity, but I can send you a comprehensive quote for each product.
+
+** Harvey Specter **: That would be helpful. I’d like to review the quotes and compare them with our current suppliers.
+
+** Jim Halpert **: Absolutely, Mr. Specter. I’ll prepare an updated pricing sheet with samples of ProductA, ProductB, and ProductC, along with ProductD, and send it over shortly.
+
+** Harvey Specter **: Sounds good. I’ll check with my team and get back to you. Do you have any ongoing promotions for the other products?
+
+** Jim Halpert **: Yes, we’re running a special bundle offer on ProductA and ProductB if ordered together in bulk. I’ll include details in the quote.
+
+** Harvey Specter **: Excellent. I appreciate your time, Jim. I’ll review everything and get back to you soon.
+
+** Jim Halpert **: Thank you, Mr. Specter. I’ll follow up in a few days to see if you need any further information or samples.
+
+** Harvey Specter **: Looking forward to it. Have a great day.
+
+** Jim Halpert **: You too, Mr. Specter. Take care.
