@@ -1,28 +1,89 @@
-# Shceduling_AI
+# Transcript Analysis Application
 
-## Installation
+This application provides a Streamlit-based interface for interacting with a scheduling AI assistant that analyzes user-uploaded or database-retrieved transcripts to extract meeting times, availability, preferences, and action items. It includes secure login functionality and conditionally renders personalized content based on user-specific data.
 
-user requirements file provided at root level to install python packages
+---
 
-cmd: pip install -r requirements.txt
+## 🔧 Setup Instructions
 
-### Note:
-1. If you wish to use gpu then you will have to install cuda compiled torch
-2. use cmd "nvidia-smi" to identify your gpu supported cuda version and then replace the same in following command at end<br><br>
-    
-    +-----------------------------------------------------------------------------------------+
-    | NVIDIA-SMI 572.83                 Driver Version: 572.83         CUDA Version: 12.8     |
-    |-----------------------------------------+------------------------+----------------------+
-    | GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |
-    | Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
-    |                                         |                        |               MIG M. |
-    |=========================================+========================+======================|
-    
-    <br>for CUDA Version 12.8<br>
-    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128<br><br>
-    
-    If you have different version replace that at last of link "/cu<version without .>"
+> **Note**: Python 3.12 is recommended for compatibility with all features and dependencies.
 
-## Setup
+1. **[Optional] Create and activate a virtual environment**
+   - This is recommended but optional based on your development setup.
+   ```bash
+   # Linux / Mac
+   python3.12 -m venv venv
+   source venv/bin/activate
 
-Run setup.py (this wll load required LLM from huggingface to local dir models)
+   # Windows
+   python -m venv venv
+   .\venv\Scripts\activate
+   ```
+
+2. **Navigate to the application source directory**
+   > The application_source directory is the source root.
+   ```bash
+   cd /application_source
+   ```
+
+3. **Set the PYTHONPATH to include the application source**
+   - This ensures all modules can be properly located and imported.
+
+   ```bash
+   # Linux / Mac
+   export PYTHONPATH=$(pwd)
+
+   # Windows (Command Prompt)
+   set PYTHONPATH=%cd%
+
+   # Windows (PowerShell)
+   $env:PYTHONPATH = (Get-Location).Path
+   ```
+
+4. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. **Secrets configuration**
+   - Manually create a folder named `secrets` in the root directory (in application_source).
+   - Place the provided secret files (you will receive them separately) inside the `secrets/` folder.
+
+---
+
+## 🚀 Application Run Instructions
+
+To launch the application:
+
+```bash
+streamlit run ui/home_page.py --server.port 8501
+```
+
+> After running the command, a local URL (usually `http://localhost:8501`) will be generated. You can open this in your web browser to access the application UI.
+
+---
+
+## 🧑‍💻 Usage Instructions
+
+1. **Login**
+   - The application opens with a login screen.
+   - Use the credentials:
+     - `SR001`
+     - `SR002`
+   - The password field accepts any input (it's a placeholder and not enforced currently).
+
+2. **Transcript Analysis Options**
+   - After login, you'll be redirected to the second page.
+   - You can either:
+     - Upload a transcript manually.
+     - Dummy transcripts can be found in folder `data/demo_data/test`
+     - Proceed with analysis using existing data from the database.
+
+   > ⚠️ **Note**: The analysis option will only be available if transcripts exist for the user in the database. New users won’t see this option.
+
+3. **Post Analysis Flow**
+   - After the analysis is completed, the application will guide you to a page that displays available time slots.
+
+---
+
+Feel free to fork, clone, and extend the project as needed. For any setup issues or feature requests, please contact the development team.

@@ -14,17 +14,22 @@ from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+from services.db_controller import DBController
+from services.agent_controller import Agent_Controller
+
 # --- Configuration ---
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
-CREDENTIALS_FILE = 'config/credentials.json'
-TOKEN_PICKLE_FILE = 'config/token.pickle'
-SESSION_STATE_BACKUP_FILE = 'config/session_backup.json'  # For OAuth state persistence
+CREDENTIALS_FILE = 'secrets/credentials.json'
+TOKEN_PICKLE_FILE = 'secrets/token.pickle'
+SESSION_STATE_BACKUP_FILE = 'secrets/session_backup.json'  # For OAuth state persistence
 REDIRECT_URI = 'http://localhost:8501/'  # Must match Google Cloud Console configuration
 
 WORKING_HOUR_START = 9
 WORKING_HOUR_END = 17
 NUM_DAYS_TO_CHECK = 14
 
+controller = DBController()
+agents = Agent_Controller()
 
 # --- Session State Backup ---
 def backup_session_state_for_oauth():
@@ -85,7 +90,7 @@ def analyse_transcripts(transcript_data_list):
 
 def schedule_meetings(analysis_results, free_slots_by_day):
     # Simulates meeting scheduling based on priority and availability
-    st.info("Simulating meeting scheduling...")
+    # st.info("Simulating meeting scheduling...")
     suggestions = []
     priority_list = analysis_results.get('priority_order', [])
 
@@ -106,7 +111,7 @@ def schedule_meetings(analysis_results, free_slots_by_day):
         else:
             suggestions.append(
                 f"**{str(client_name)}** (Score: {client_score:.2f}): No more free slots available in the checked range.")
-    st.success("Meeting scheduling simulation complete.")
+    # st.success("Meeting scheduling simulation complete.")
     return suggestions if suggestions else ["No suitable meeting slots or clients to schedule."]
 
 
@@ -217,7 +222,7 @@ def fetch_calendar_free_slots(credentials):
             slots = get_free_slots(busy_today, day_start_local, day_end_local)
             if slots: free_slots_by_day[current_date.strftime('%Y-%m-%d')] = slots
 
-        st.success("Successfully fetched calendar slots.")
+        # st.success("Successfully fetched calendar slots.")
         return free_slots_by_day
     except HttpError as e:
         st.error(f"A Google Calendar API error occurred: {e}")
@@ -322,8 +327,32 @@ with st.form("transcript_upload_form", clear_on_submit=True):
                     valid_submission = False
                     break
 
+            ###
+            customers_list = controller.get_customers_list(seller_id=st.session_state.user)
+
+            for data in processed_data:
+                if data['client_name'].lower().replace('_', ' ') not in customers_list:
+                    valid_submission = False
+                    st.warning(f"Error finding Assocated Customer: {data['client_name'].replace('_', ' ')}")
+
             if valid_submission:
+
                 st.session_state.transcript_data = processed_data
+                # controller.insert_summary_kpi(seller_id=st.session_state.user,
+                #                               customer_name='Robert_Zane',
+                #                               transcript="",
+                #                               summary="",
+                #                               kpis={})
+
+                with st.spinner("Summary generation & KPIs extraction..."):
+                    for data in processed_data:
+                        summary, kpis = agents.information_extract(transcript_data=data['content'])
+                        controller.insert_summary_kpi(seller_id=st.session_state.user,
+                                                     customer_name=data["client_name"],
+                                                     transcript=data['content'],
+                                                     summary=summary,
+                                                     kpis=kpis)
+
                 # Reset subsequent step states
                 for key in ['analysis_results', 'suggested_schedule', 'free_slots_data', 'show_auth_flow',
                             'auth_purpose', 'auth_url', 'auth_flow_started', 'show_auth_flow_intended']:
@@ -332,32 +361,35 @@ with st.form("transcript_upload_form", clear_on_submit=True):
                 st.rerun()
 
 # Section 2: Actions after transcript upload
-if st.session_state.transcript_data:
+# if st.session_state.transcript_data:
+if st.session_state.kpis_present:
     st.header("2. Choose Your Next Step")
-    st.write(f"Clients to process: {', '.join([item['client_name'] for item in st.session_state.transcript_data])}")
+    # st.write(f"Clients to process: {', '.join([item['client_name'] for item in st.session_state.transcript_data])}")
 
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Analyse Transcripts & Prioritize Clients"):
             with st.spinner("Analyzing transcripts..."):
-                st.session_state.analysis_results = analyse_transcripts(st.session_state.transcript_data)
+                st.session_state.analysis_results = agents.priority_results_generation(seller_id=st.session_state.user)
+                # st.session_state.analysis_results = analyse_transcripts(st.session_state.transcript_data)
             # Reset states for scheduling if analysis is re-run
             for key in ['suggested_schedule', 'show_auth_flow', 'auth_purpose', 'free_slots_data',
                         'auth_url', 'auth_flow_started', 'show_auth_flow_intended']:
                 st.session_state[key] = default_session_keys[key]
             st.rerun()
-    with col2:
-        if st.button("Suggest Meeting Times (Requires Calendar Access)"):
-            if not st.session_state.analysis_results:
-                st.warning("Please analyse transcripts first to determine client priority.")
-            else:
-                st.session_state.show_auth_flow = True  # Trigger display of Section 4
-                st.session_state.suggested_schedule = None  # Clear any old schedule
-                st.session_state.free_slots_data = None  # Clear old slots
-                st.rerun()
+    # with col2:
+    #     if st.button("Suggest Meeting Times (Requires Calendar Access)"):
+    #         if not st.session_state.analysis_results:
+    #             st.warning("Please analyse transcripts first to determine client priority.")
+    #         else:
+    #             st.session_state.show_auth_flow = True  # Trigger display of Section 4
+    #             st.session_state.suggested_schedule = None  # Clear any old schedule
+    #             st.session_state.free_slots_data = None  # Clear old slots
+    #             st.rerun()
 
 # Section 3: Display Analysis Results
-if st.session_state.analysis_results and not st.session_state.get('show_auth_flow', False):
+# if st.session_state.analysis_results and not st.session_state.get('show_auth_flow', False):
+if st.session_state.analysis_results:
     st.header("3. Client Analysis & Priority")
     results = st.session_state.analysis_results
     priority_order = results.get('priority_order', [])
@@ -371,12 +403,30 @@ if st.session_state.analysis_results and not st.session_state.get('show_auth_flo
             st.markdown(f"**{i + 1}. {client_name}** (Conversion Score: {score})")
 
         st.subheader("Client Summaries:")
-        for client_name in priority_order:
+        # for client_name in priority_order:
+        #     client_data = results.get(client_name)
+        #     if client_data:  # Ensure client_data exists
+        #         with st.expander(f"Details for {client_name} (Score: {client_data.get('score', 'N/A')})"):
+        #             st.write(client_data.get('summary', "No summary available."))
+        tabs = st.tabs([f"{client_name} (Score: {results.get(client_name, {}).get('score', 'N/A')})"
+                        for client_name in priority_order if results.get(client_name)])
+
+        for i, client_name in enumerate(priority_order):
             client_data = results.get(client_name)
-            if client_data:  # Ensure client_data exists
-                with st.expander(f"Details for {client_name} (Score: {client_data.get('score', 'N/A')})"):
+            if client_data:
+                with tabs[i]:
+                    st.subheader(f"Details for {client_name}")
                     st.write(client_data.get('summary', "No summary available."))
-    st.markdown("---")
+
+        st.markdown("---")
+        if st.button("Suggest Meeting Times (Requires Calendar Access)"):
+            if not st.session_state.analysis_results:
+                st.warning("Please analyse transcripts first to determine client priority.")
+            else:
+                st.session_state.show_auth_flow = True  # Trigger display of Section 4
+                st.session_state.suggested_schedule = None  # Clear any old schedule
+                st.session_state.free_slots_data = None  # Clear old slots
+                st.rerun()
 
 # Section 4: Google Calendar Authentication & Scheduling Logic
 if st.session_state.get('show_auth_flow', False):
@@ -402,7 +452,7 @@ if st.session_state.get('show_auth_flow', False):
                 backup_session_state_for_oauth()  # Save state before redirect
 
                 flow = get_google_oauth_flow()
-                authorization_url, _ = flow.authorization_url(access_type='offline', include_granted_scopes='true')
+                authorization_url, _ = flow.authorization_url(access_type='offline', include_granted_scopes='true', state=st.session_state.user)
 
                 st.session_state.auth_url = authorization_url
                 st.session_state.auth_flow_started = True
@@ -422,6 +472,7 @@ if st.session_state.get('show_auth_flow', False):
 
     elif current_credentials and current_credentials.valid:  # User is authenticated
         st.success("Successfully authenticated with Google Calendar.")
+        st.session_state.auth_purpose = 'schedule_meetings'
         if st.button("Sign Out from Google"):
             clear_all_auth_state()
             st.rerun()

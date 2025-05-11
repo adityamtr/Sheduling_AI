@@ -1,0 +1,29 @@
+** Dwight Schrute **: Hello Jessica, thank you for taking the time to meet with me today. I wanted to follow up on your last order and see how everything has been going with ProductB, the Matte Paper.
+
+** Jessica Pearson **: Hi Dwight. Honestly, we've been having recurring issues with ProductB. It caused printer jams in two different machines, which has been quite frustrating.
+
+** Dwight Schrute **: I sincerely apologize for the inconvenience, Jessica. We recently identified a flawed batch of ProductB and have recalled it to prevent further issues. I understand how disruptive printer jams can be, and I appreciate your patience.
+
+** Jessica Pearson **: I appreciate the recall, but the problem has already impacted our operations. We’re considering testing other vendors because of past delays in fulfillment and support.
+
+** Dwight Schrute **: I completely understand your concerns. To help, I’d like to offer you a trial batch of our new ProductC, the Recycled Paper, which has been tested extensively for quality and reliability. Would you be interested in trying it out?
+
+** Jessica Pearson **: Thanks for the offer, Dwight, but at this point, we’re hesitant to try new products until we resolve our current issues. We need to see consistent performance first.
+
+** Dwight Schrute **: That’s understandable, Jessica. If I may suggest, we also have ProductA, the Glossy Paper, which is known for its high-quality finish and fewer printer issues. It might be a good alternative for your needs.
+
+** Jessica Pearson **: I’ll keep that in mind. Right now, our leadership has decided to pause all new engagements and testing with vendors for the next quarter to evaluate our options thoroughly.
+
+** Dwight Schrute **: I see. So, you’d prefer to pause all outreach for now. I respect that, Jessica. Would it be okay if I send you some detailed information about ProductA and ProductD, the Cardstock Paper, for future reference?
+
+** Jessica Pearson **: Yes, please do. I’d appreciate that. For now, I’d like to request that all future outreach be paused for this quarter while we assess our options.
+
+** Dwight Schrute **: Absolutely, Jessica. I will ensure that no further communications are sent until you’re ready. Thank you for your honesty and for considering our products. If your team needs any assistance or has questions in the future, please don’t hesitate to reach out.
+
+** Jessica Pearson **: Thank you, Dwight. I appreciate your understanding. We’ll be in touch once we’re ready to revisit our vendor options.
+
+** Dwight Schrute **: Thank you, Jessica. Have a great day, and I look forward to speaking with you again when the time is right.
+
+** Jessica Pearson **: You too, Dwight. Goodbye.
+
+** Dwight Schrute **: Goodbye.

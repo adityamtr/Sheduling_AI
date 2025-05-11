@@ -8,6 +8,7 @@ import os
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+root_path = os.getcwd().split('application_source')[0] + 'application_source'
 
 def set_working_directory(path: str):
     os.chdir(path)
@@ -142,7 +143,7 @@ def main():
     
     salesrep_id_param = args.salesrep_id
 
-    folder_path = '/Users/rumszz/Documents/GitHubRepos/Shceduling_AI/application_source/data/demo_data'#change
+    folder_path = f'{root_path}/data/demo_data'#change
     today = date.today()
     today = pd.to_datetime(str(today))
 

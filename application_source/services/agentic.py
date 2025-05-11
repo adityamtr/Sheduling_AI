@@ -235,10 +235,7 @@ class AgentGenerateKPIs(ContextMethods):
 
 
 class CustomerDetails(BaseModel):
-    customer_id: int
     customer_name: str
-    priority: int
-    priority_score: float
     priority_reason: str
     highlights_last_meeting: Optional[str] = None
     next_meeting_agenda: Optional[str] = None
@@ -250,20 +247,14 @@ class Agent_Generate_Priority_Reasoning(ContextMethods):
         self.context = []
         self.kpis_table = pd.read_csv("./data/demo_data/output/transcript_extracted_kpi_table.csv")
         self.example  = [{
-            "customer_id": 101,
             "customer_name": "John Doe",
-            "priority": 1,
-            "priority_score": 4.5,
             "priority_reason": "High engagement and strong past sales performance",
             "highlights_last_meeting": "Discussed pricing and expansion strategy",
             "next_meeting_agenda": "Review latest KPIs and align on next-quarter strategy",
             "suggestions_next_meeting": "Offer new promotional discounts based on buying trends"
         }, 
         {
-            "customer_id": 301,
             "customer_name": "Jenny Fin",
-            "priority": 2,
-            "priority_score": 2.5,
             "priority_reason": "Moderate engagement and medium past sales performance",
             "highlights_last_meeting": "Discussed pricing and expansion strategy",
             "next_meeting_agenda": "Review latest KPIs and align on next-quarter strategy",
@@ -275,95 +266,142 @@ class Agent_Generate_Priority_Reasoning(ContextMethods):
         schema = strict_schema(modelschema)
         return False
     
-    def prompt_func(self, customer, priority_dict = {}):
+    def prompt_func(self, user_input):
         self.add_role(role="system", content=self.role_defination())
-        self.add_role(role="system", content=self.task_defination(priority_dict))
-        self.add_role(role="system", content=self.response_format(priority_dict))
-        self.add_role(role="user", content=self.user_input_defination(customer, priority_dict))
+        self.add_role(role="system", content=self.task_defination())
+        self.add_role(role="system", content=self.response_format())
+        self.add_role(role="user", content=self.user_input_defination(user_input))
 
         return self.build_context()
     
     def role_defination(self):
-        prompt = f"""You are an expert Content generator & analyser.
+        prompt = f"""
+        
+        You are an expert Content generator & analyser.
+        
         Your task is to analyse the contents/ details provided to you regarding various Customers of a Sales representative.
         Once analysed, you need to generate a few content based on these details accordingly. 
-            """
+        """
+
         return prompt
     
-    def task_defination(self, priority_dict):
-        prompt = f"""For the Sales representative, you will be provided with the details of a few Customers. 
+    def task_defination(self):
+        prompt = f"""
+        For the Sales representative, you will be provided with the details of a few Customers. 
     
         Following are the details (KPIs) that each customer will have:
 
-            - Customer_id: ID of the Customer
             - Customer_name: Name of the Customer. 
-            - summary: The call summary of the last phone call. 
-            - sentiment: The sentiment of the call.
+            - priority: Priority of the Customer according to custom Model ,
+            - priority_score : Priority Score of the Customer according to custom Model,
+            - summary: The call summary of the conversation. 
+            - sentiment: The sentiment of the conversation.
             - products_marketed_list: Names of the products marketed or discussed by Sales Representative during the meeting in Python list format. 
             - products_interested_list: Names of products the Customer seems to be genuinely interested in Python list format. 
 
-        You will also be provided with the Customer proiority list and their respective priority scores. 
+        You will also be provided with the Customer priority list and their respective priority scores. 
 
         As per the priority list and the KPI details provided to you, You will generate the following pointers for each of the Customers and return them back in form of list of JSONs.
         Each JSON element of the list will have the following fields:
 
-            -1. Customer_id: ID of the Customer
-            -2. Customer_name: Name of the Customer.
-            -2. Priority: The priority order
-            -3. Priority_score: The priority score
-            -4. Priority_reason: The detailed explaination providing the reason for the priority level and score for this customer based on the provided KPIs.
-            -5. Highlights_last_meeting: Highlighting the key pointers of the previous meeting.
-            -6. Next_meeting_agenda: Discuss about the agenda of the next meeting in details. 
-            -7. Suggestions_next_meeting: Suggestions for the next meeting based on the Customer KPIs.
+            -1. Priority_reason: The detailed explanation providing the reason for the priority level and score for this customer based on the provided KPIs.
+            -2. Highlights_last_meeting: Highlighting the key pointers of the previous meeting.
+            -3. Next_meeting_agenda: Discuss about the agenda of the next meeting in details. 
+            -4. Suggestions_next_meeting: Suggestions for the next meeting based on the Customer KPIs.
 
-        Provide these details in form of a Python list only. No other text, or explaination is needed.
+        Provide these details in form of a Python list only. No other text, or explanation is needed.
         NOTE:
         
-            -  The KPIs are the main reference pointers
-            -  Keep the Suggestions_next_meeting as a list of pointers. 
+            - The KPIs are the main reference pointers
+            - Utilize Summary at the fullest to generate results
+            - Be very descriptive while generating above points
+            - Maintain Proper headers and labels, i want a markdown format of results you are generating
+            - These needs to be presented in a UI so maintain proper markdown formats
 
         """
+
+        return prompt
     
     def response_format(self):
-        prompt = f"""The response format should be in form of a Python list. 
+        prompt = f"""
+        The response format should be in form of a Python list. 
         The python list should comprise of the JSONs for each Customer. 
         
-        Here is a Schema for an invidual Customer JSON: 
+        Here is a Schema for an individual Customer JSON: 
         {CustomerDetails.model_json_schema()}
 
         So if there are 3 customers for a Sales representative, the response schema would be like:
         [{CustomerDetails.model_json_schema()}, {CustomerDetails.model_json_schema()}, {CustomerDetails.model_json_schema()}]
 
-        Here is an example to follow, if the number of customers is 2 for the sales representative:
-        {self.example}
-
         NOTE:
         1. The example is just for you to get an idea of the response format. 
         2. Do NOT reply on the example for the data and facts.  only the KPIs are the main source of data. 
         """
+
         return prompt
     
-    def extract_format_data(self, customer, priority_dict):
-        customer_df = self.kpis_table[self.kpis_table["sales_rep_id"] == customer]
-        client_list_dfs = [customer_df[customer_df["client_id"] == key] for key in priority_dict]
-        
-        client_list_dfs = self.extract_data(client_list_dfs)
-        kpi_strings = ""
-        for client_df in client_list_dfs:
-            client_df = client_df.sort_values(by="timestamp", ascending = False).head(2)
-            client_df = client_df.drop(["transcript"], asis = 1)
-
-
-    
-    def user_input_defination(self, customer, priority_dict):
+    def user_input_defination(self, user_input):
 
 
         prompt = f"""
-        Here are the details of the KPIs for the customer and the client:
-        Customer ID: {customer}
+        Here are the details of the KPIs for the customers and there conversations with sales representative:
+        
+        {user_input}
+
+        """
+
+        return prompt
 
 
-        {}
+class Agent_Formatter(ContextMethods):
+
+    def __init__(self):
+        self.context = []
+
+    def prompt_response_schema(self):
+        return False
+
+    def prompt_func(self, user_input=None):
+        self.add_role(role="system", content=self.role_defination())
+        self.add_role(role="system", content=self.task_defination())
+        self.add_role(role="user", content=self.user_input_defination(user_input))
+
+        return self.build_context()
+
+    def role_defination(self):
+        prompt = f"""
+        You are expert content formatter. 
+        You task is to analyse a whole given pointers and generated formatted output
+        """
+
+        return prompt
+
+    def task_defination(self):
+        prompt = f"""
+
+        You Task is:
+
+        - Analyse given pointers and generated formatted output
+        - Generate proper explanations of points given, like complete sentences.
+        - Generate response like a proper guided conversation, which sounds like human is talking.
+        - Identify headings and labels and sections from given user input
+        - Generate brief explanation that includes
+            1. Proper markdown format of headings and labels
+            2. Primary points discussed
+
+        Important Notes:
+
+        - Return only generated summary, nothing else is required
+
+        """
+
+        return prompt
+
+    def user_input_defination(self, data):
+        prompt = f"""
+        Here is input content:
+
+        {data}
         """
 
         return prompt
