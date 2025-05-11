@@ -414,7 +414,7 @@ if st.session_state.kpis_present:
 # Section 3: Display Analysis Results
 # if st.session_state.analysis_results and not st.session_state.get('show_auth_flow', False):
 if st.session_state.analysis_results:
-    st.header(f"3. Customer Analysis & Priority [ Top {config.get("optimization", "visits_threshold")} Customers ]")
+    st.header(f"3. Customer Analysis & Priority [ Top {config.get('optimization', 'visits_threshold')} Customers ]")
     results = st.session_state.analysis_results
     priority_order = results.get('priority_order', [])
 
